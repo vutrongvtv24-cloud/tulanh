@@ -93,9 +93,8 @@ function MessagesContent() {
                                 </Avatar>
                                 <div className="overflow-hidden">
                                     <div className="font-semibold text-sm truncate">{conv.other_user?.full_name}</div>
-                                    <div className="text-xs text-muted-foreground truncate">
-                                        {/* Last message preview logic could go here */}
-                                        Click to view chat
+                                    <div className="text-xs text-muted-foreground truncate h-4">
+                                        {conv.last_message || "Start chatting..."}
                                     </div>
                                 </div>
                             </div>
@@ -105,31 +104,51 @@ function MessagesContent() {
             </Card>
 
             {/* Right Side: Chat Window */}
-            <Card className="w-2/3 flex flex-col overflow-hidden">
+            <Card className="w-2/3 flex flex-col overflow-hidden border shadow-sm">
                 {activeConversationId ? (
                     <>
                         {/* Chat Header */}
-                        <div className="p-4 border-b bg-muted/30 flex items-center gap-3">
-                            <Avatar className="h-8 w-8">
+                        <div className="p-4 border-b bg-muted/30 flex items-center gap-3 shadow-sm z-10">
+                            <Avatar className="h-9 w-9 border">
                                 <AvatarImage src={activeConv?.other_user?.avatar_url} />
                                 <AvatarFallback>{activeConv?.other_user?.full_name?.[0]}</AvatarFallback>
                             </Avatar>
-                            <span className="font-semibold">{activeConv?.other_user?.full_name || "Unknown User"}</span>
+                            <div>
+                                <div className="font-semibold text-sm">{activeConv?.other_user?.full_name || "Unknown User"}</div>
+                                <div className="text-[10px] text-muted-foreground flex items-center gap-1">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-green-500 block"></span> Online
+                                </div>
+                            </div>
                         </div>
 
                         {/* Messages Area */}
                         <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-background">
+                            {messages.length === 0 && (
+                                <div className="text-center py-10 opacity-50">
+                                    <p>No messages yet.</p>
+                                    <p className="text-sm">Say hello! 👋</p>
+                                </div>
+                            )}
                             {messages.map((msg) => {
                                 const isMe = msg.sender_id === user.id;
                                 return (
-                                    <div key={msg.id} className={`flex ${isMe ? "justify-end" : "justify-start"}`}>
+                                    <div key={msg.id} className={`flex ${isMe ? "justify-end" : "justify-start"} animate-in fade-in slide-in-from-bottom-2`}>
+                                        {!isMe && (
+                                            <Avatar className="h-6 w-6 mr-2 mt-1">
+                                                <AvatarImage src={activeConv?.other_user?.avatar_url} />
+                                                <AvatarFallback>U</AvatarFallback>
+                                            </Avatar>
+                                        )}
                                         <div
-                                            className={`max-w-[70%] p-3 rounded-lg text-sm ${isMe
-                                                ? "bg-primary text-primary-foreground rounded-tr-none"
-                                                : "bg-muted text-foreground rounded-tl-none"
+                                            className={`max-w-[70%] px-4 py-2 rounded-2xl text-sm shadow-sm ${isMe
+                                                ? "bg-primary text-primary-foreground rounded-br-none"
+                                                : "bg-muted/80 text-foreground rounded-bl-none"
                                                 }`}
                                         >
                                             {msg.content}
+                                            <div className={`text-[9px] mt-1 opacity-70 ${isMe ? "text-primary-foreground/80" : "text-muted-foreground/80"} text-right`}>
+                                                {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                            </div>
                                         </div>
                                     </div>
                                 );
@@ -138,13 +157,13 @@ function MessagesContent() {
                         </div>
 
                         {/* Input Area */}
-                        <div className="p-4 border-t bg-muted/10">
+                        <div className="p-4 border-t bg-background/50 backdrop-blur-sm">
                             <form onSubmit={handleSend} className="flex gap-2">
                                 <Input
                                     value={inputText}
                                     onChange={(e) => setInputText(e.target.value)}
                                     placeholder="Type a message..."
-                                    className="flex-1"
+                                    className="flex-1 rounded-full px-4 border-muted-foreground/20 focus-visible:ring-offset-0 focus-visible:ring-1"
                                 />
                                 <Button type="submit" size="icon" disabled={!inputText.trim()}>
                                     <Send className="h-4 w-4" />

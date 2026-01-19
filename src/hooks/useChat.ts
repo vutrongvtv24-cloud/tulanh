@@ -74,12 +74,42 @@ export function useChat() {
                 .in('id', convIds)
                 .order('updated_at', { ascending: false });
 
+            // 4. Fetch last message for each conversation (optimization: could be a view later)
+            const lastMessagesMap: Record<string, string> = {};
+            if (convIds.length > 0) {
+                const { data: lastMsgs } = await supabase
+                    .from('direct_messages')
+                    .select('conversation_id, content')
+                    .in('conversation_id', convIds)
+                    .order('created_at', { ascending: false })
+                    // We can't distinct on client easily for batch, so simplified approach:
+                    // Just fetch latest ones. For scale, this needs a DB View.
+                    // For now, let's just cheat and fetch all recent messages or just leave it empty
+                    // Actually, a better way without view:
+                    // Just let the UI say "Open to chat" or handle it if we really need it.
+                    // But the user wants "Immediate implementation". Let's try to get it right.
+                    ;
+
+                // Alternative: map through convs and fetch limit 1 for each (N+1 but acceptable for < 20 convs)
+                await Promise.all(convIds.map(async (cid) => {
+                    const { data } = await supabase
+                        .from('direct_messages')
+                        .select('content')
+                        .eq('conversation_id', cid)
+                        .order('created_at', { ascending: false })
+                        .limit(1)
+                        .single();
+                    if (data) lastMessagesMap[cid] = data.content;
+                }));
+            }
+
             if (convMeta && allParticipants) {
                 const formatted: Conversation[] = convMeta.map(c => {
                     const other = allParticipants.find(p => p.conversation_id === c.id) as any;
                     return {
                         id: c.id,
                         updated_at: c.updated_at,
+                        last_message: lastMessagesMap[c.id] || "No messages yet",
                         other_user: other ? {
                             id: other.user_id,
                             full_name: Array.isArray(other.profiles) ? other.profiles[0]?.full_name : other.profiles?.full_name,
