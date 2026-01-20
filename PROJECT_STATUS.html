@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Status - Builder Ecosystem</title>
+    <title>Tài liệu Dự Án - Vietnam Social</title>
     <!-- GitHub Markdown CSS -->
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown-light.min.css">
@@ -16,6 +16,7 @@
             margin: 0 auto;
             padding: 45px;
             background-color: #f6f8fa;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
         }
 
         @media (max-width: 767px) {
@@ -30,186 +31,188 @@
             border-radius: 8px;
             background: #fff;
         }
+        
+        /* Mermaid styling fix */
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            background: #fcfcfc;
+            padding: 10px;
+            border-radius: 4px;
+        }
     </style>
 </head>
 
 <body>
     <article class="markdown-body" id="content">
-        <!-- Markdown rendered content -->
+        <!-- Markdown rendered content will appear here -->
     </article>
 
-    <!-- Marked Library -->
+    <!-- Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
 
     <!-- Raw Markdown Data -->
     <script id="raw-markdown" type="text/markdown">
-# 📊 Báo Cáo Trạng Thái Dự Án: Friends Zone
+# 📘 Tài Liệu Kỹ Thuật: Vietnam Social
 
-> **Cập nhật lần cuối:** 19/01/2026 22:30
-> **Version:** 1.2.0 (Identity Update & UX Improvements)
-> **Repository:** https://github.com/vutrongvtv24-cloud/builder-ecosystem
-
----
-
-## 1. 🏗️ Tổng Quan Dự Án
-
-**Friends Zone** là một nền tảng mạng xã hội gamified nơi các thành viên (Builders) kết nối và phát triển.
-
-### 🔄 Recent Updates (v1.2.0)
-- **Rebranding:** Đổi tên dự án từ "Builder Ecosystem" thành "Friends Zone".
-- **Leaderboard UX:**
-  - Link trực tiếp tới Profile thành viên từ bảng xếp hạng.
-  - Tích hợp nút nhắn tin nhanh (Quick Message) trên bảng xếp hạng.
-  - Thống nhất hiển thị điểm số (XP).
-- **Fixes:** Sửa lỗi chuyển hướng đăng nhập Google (Auth Callback).
-
-### Công Nghệ (Tech Stack)
-
-| Layer | Technology |
-|-------|------------|
-| **Framework** | Next.js 16.1.3 (App Router + Turbopack) |
-| **Language** | TypeScript 5.x |
-| **Runtime** | Node.js ≥20 |
-| **UI Library** | React 19.2.3 |
-| **Styling** | Tailwind CSS 3.4.19 + Shadcn/UI |
-| **Icons** | Lucide React 0.562.0 |
-| **Auth** | Supabase Auth (Google OAuth) |
-| **Database** | Supabase (PostgreSQL + Realtime) |
-| **Storage** | Supabase Storage (Images, Avatars) |
-| **State** | React Context API |
-| **Theme** | next-themes (Dark/Light Mode) |
-| **Notifications** | Sonner (Toast) |
+> **Dự án:** Vietnam Social (Mạng xã hội cho Builders)  
+> **Phiên bản:** 2.0.0 (Post Approval System & Courses)  
+> **Cập nhật lần cuối:** 20/01/2026
 
 ---
 
-## 2. 📁 Cấu Trúc Thư Mục
+## 1. Tổng Quan Hệ Thống
 
-```
-web/
-├── src/
-│   ├── app/                   # Pages: auth, class, space, profile...
-│   ├── components/            # Components: feed, gamification, ui...
-│   ├── hooks/                 # Hooks: usePosts, useSupabaseAuth...
-│   ├── lib/                   # Utils: supabase client
-│   └── types/                 # TypeScript interfaces
-├── supabase/                  # SQL Migrations & Schema
-└── ...config files
+**Vietnam Social** là nền tảng mạng xã hội tập trung vào việc chia sẻ kiến thức, kết nối cộng đồng builder, và học tập. Dự án sử dụng stack hiện đại với **Next.js 16** cho Frontend và **Supabase** cho Backend/Database.
+
+### 🏛️ Kiến Trúc Công Nghệ
+
+```mermaid
+graph TD
+    A[User Client] -->|Next.js App Router| B(Frontend: Vercel)
+    B -->|Supabase Client| C{Supabase Backend}
+    C -->|Postgres| D[(Database)]
+    C -->|Realtime| A
+    C -->|Auth| E[Authentication]
+    
+    subgraph "Core Features"
+    F[Feed System]
+    G[Approval System]
+    H[Gamification]
+    I[Courses]
+    end
 ```
 
 ---
 
-## 3. 🗄️ Database Schema
+## 2. Logic Nghiệp Vụ Chính (Core Logic)
 
-### Tables Overview
+### 📌 A. Quy Trình Duyệt Bài (Post Approval)
 
-```sql
--- Core Tables
-profiles (id, email, full_name, avatar_url, bio, level, xp, role, ...)
+Để đảm bảo chất lượng nội dung, hệ thống áp dụng cơ chế duyệt bài nghiêm ngặt kết hợp giữa Admin và Cộng đồng.
 
--- Community System (New)
-communities (id, slug, name, description, icon, required_level, ...)
+**Quy tắc:**
+1.  **Bài viết mới** sẽ mặc định ở trạng thái `Pending` (Chờ duyệt).
+2.  **Admin** (vutrongvtv24@gmail.com) có quyền **Duyệt (Approve)** hoặc **Từ chối (Reject)** ngay lập tức.
+3.  **Cộng đồng** có thể tham gia duyệt bằng nút **"Vote OK"**.
+4.  Khi số vote **lớn hơn 50% tổng số users** của hệ thống -> Bài viết **Tự động Approved**.
 
-community_members (id, community_id, user_id, role, status, joined_at)
--- roles: admin, moderator, member
--- status: pending, approved, rejected
-
-posts (id, user_id, content, image_url, community_id, status, ...)
--- status: approved, pending, rejected
-
--- Social
-likes, comments, follows, notifications...
+```mermaid
+stateDiagram-v2
+    [*] --> Pending: User đăng bài
+    Pending --> Approved: Admin Approve
+    Pending --> Rejected: Admin Reject
+    Pending --> Pending: User Votes
+    
+    state "Kiểm tra Vote (>50%)" as CheckVote
+    Pending --> CheckVote: Có vote mới
+    CheckVote --> Approved: Đủ điều kiện (>50%)
+    CheckVote --> Pending: Chưa đủ
+    
+    Approved --> [*]: Hiển thị Public
+    Rejected --> [*]: Ẩn bài viết
 ```
 
-### Database Triggers
+### 🎮 B. Gamification (Tính Điểm & Level)
 
-| Trigger | Description | XP Reward |
-|---------|-------------|-----------|
-| `on_post_created` | Award XP for posting | +10 XP |
-| `on_like_created` | Award XP for liking | +2 XP / +5 XP |
-| `on_comment_created` | Award XP for commenting | +3 XP / +5 XP |
-| `auto_level_up` | Level up when XP threshold reached | - |
+Người dùng được khuyến khích tương tác thông qua hệ thống điểm kinh nghiệm (XP) và Cấp độ (Level).
 
----
+*   **Logic:** XP tích lũy từ các hành động (Đăng bài = 10xp, Like = 2xp...).
+*   **Hiển thị:** Level hiện tại hiển thị cạnh tên người dùng (VD: `Level 5 Builder`).
+*   **Mục đích:** Level cao có thể mở khóa các tính năng đặc biệt (ví dụ: truy cập Course nâng cao - *Future Feature*).
 
-## 4. ✅ Trạng Thái Chức Năng
+### 💬 C. Bình Luận Realtime
 
-### Đã Hoàn Thành ✅
-
-#### Core & UI
-- [x] Next.js 16 + TypeScript + Tailwind CSS setup
-- [x] Responsive 3-column layout
-- [x] Dark/Light mode toggle
-- [x] Premium UI với glassmorphism effects
-
-#### Community & Groups (New)
-- [x] Dynamic Class/Group Pages
-- [x] Membership System (Join/Leave)
-- [x] Admin Dashboard for each Group
-- [x] Member Approval Workflow
-- [x] Post Moderation (Pending/Approve/Reject)
-- [x] Level-gated Posting Access
-
-#### Social Features
-- [x] Global Feed & Group Feed
-- [x] Create/View posts with images
-- [x] Like/Unlike posts
-- [x] Comments on posts
-- [x] Realtime notifications
-- [x] Search (posts & users)
-
-#### Gamification
-- [x] XP system with multiple sources
-- [x] Progressive leveling (Level × 100 XP)
-- [x] Badge system (auto-award)
-- [x] Leaderboard (realtime)
-- [x] Locked content by level
-
-#### Profile Customization
-- [x] One-time name change
-- [x] One-time avatar upload
-- [x] Badges displayed next to name
+Hệ thống sử dụng **Supabase Realtime** để cập nhật bình luận ngay lập tức mà không cần F5 trang web.
+*   Khi User A bình luận -> Server bắn sự kiện `INSERT`.
+*   User B (đang xem bài) -> Nhận sự kiện -> Hiển thị comment mới ngay lập tức.
 
 ---
 
-## 5. 📋 Environment Variables
+## 3. Cấu Trúc Cơ Sở Dữ Liệu (Database Schema)
 
-```env
-NEXT_PUBLIC_SUPABASE_URL=...
-NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+Dưới đây là các bảng chính trong hệ thống:
+
+```mermaid
+erDiagram
+    PROFILES ||--o{ POSTS : "creates"
+    PROFILES ||--o{ COMMENTS : "writes"
+    PROFILES ||--o{ LIKES : "likes"
+    PROFILES ||--o{ POST_APPROVALS : "votes"
+    
+    POSTS ||--o{ COMMENTS : "has"
+    POSTS ||--o{ LIKES : "has"
+    POSTS ||--o{ POST_APPROVALS : "validated by"
+
+    PROFILES {
+        uuid id PK
+        string full_name
+        int level
+        int xp
+    }
+
+    POSTS {
+        uuid id PK
+        uuid user_id FK
+        text content
+        text status "('pending', 'approved', 'rejected')"
+        uuid community_id
+    }
+
+    POST_APPROVALS {
+        uuid id PK
+        uuid post_id FK
+        uuid user_id FK
+        timestamp created_at
+    }
 ```
 
 ---
 
-## 6. 🚀 Deployment
+## 4. Cấu Trúc Thư Mục (Source Code)
 
-### GitHub Repository
-- **Status:** ✅ Code pushed successfully
-
-### Vercel Deployment
-- **Status:** ⚠️ Pending Manual Configuration (Env Vars required)
-
----
-
-## 7. 🔮 Roadmap (Pending Features)
-
-### Phase 2 - Monetization
-- [ ] Stripe/PayPal integration
-- [ ] Premium subscription plans
-
-### Phase 3 - Advanced Features
-- [ ] Group chat
-- [ ] Video upload support
-- [ ] Push notifications
-- [ ] Admin dashboard
+*   `src/app`: Chứa các trang chính (App Router).
+    *   `/`: Trang chủ (Home Feed).
+    *   `/courses`: Trang khóa học (Placeholder).
+    *   `/messages`: Tin nhắn.
+*   `src/components`: UI Components.
+    *   `/feed`: Các component liên quan Feed (PostCard, CreatePost, Feed).
+    *   `/layout`: Sidebar, Header.
+*   `src/hooks`: Custom Hooks.
+    *   `usePosts.ts`: Quản lý logic lấy bài, phân trang, gửi bài.
+    *   `useGamification.ts`: Quản lý Logic Level.
+*   `supabase/migrations`: Chứa các file SQL để khởi tạo Database.
 
 ---
 
-*Generated by Antigravity AI Assistant*
+## 5. Trạng Thái Hiện Tại
+
+| Tính năng | Trạng thái | Ghi chú |
+| :--- | :---: | :--- |
+| **Đăng nhập/Đăng ký** | ✅ Hoàn thành | Google Auth |
+| **News Feed** | ✅ Hoàn thành | Infinite Scroll |
+| **Đăng bài viết** | ✅ Hoàn thành | Hỗ trợ ảnh, Text |
+| **Realtime Comment** | ✅ Hoàn thành | |
+| **Duyệt bài (Admin)** | ✅ Hoàn thành | Policy bảo mật OK |
+| **Vote duyệt (User)** | ✅ Hoàn thành | Logic > 50% OK |
+| **Courses UI** | 🚧 Placeholder | Đang phát triển nội dung |
+
+---
+
+> **Note cho Developer:** Khi cài đặt lại dự án, bắt buộc phải chạy file SQL migration mới nhất để tạo bảng `post_approvals` và cột `status`.
+
     </script>
 
     <script>
-        const rawMarkdown = document.getElementById('raw-markdown').textContent;
-        document.getElementById('content').innerHTML = marked.parse(rawMarkdown);
+        // Render Markdown
+        const markdownInput = document.getElementById('raw-markdown').innerHTML;
+        const contentDiv = document.getElementById('content');
+        contentDiv.innerHTML = marked.parse(markdownInput);
     </script>
 </body>
 
