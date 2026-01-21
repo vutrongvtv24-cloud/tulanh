@@ -58,6 +58,29 @@ export function PostCard({ post, onToggleLike, onDeletePost, onBlockUser }: Post
     const { level } = useGamification();
     const { t, language } = useLanguage();
 
+    const renderContentWithLinks = (content: string) => {
+        if (!content) return null;
+        // Simple regex for URLs
+        const urlRegex = /(https?:\/\/[^\s]+)/g;
+        return content.split(urlRegex).map((part, index) => {
+            if (part.match(urlRegex)) {
+                return (
+                    <a
+                        key={index}
+                        href={part}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary hover:underline break-words"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        {part}
+                    </a>
+                );
+            }
+            return part;
+        });
+    };
+
     const minLevel = post.min_level_to_view || 0;
     const isAuthor = user?.id === post.user.id;
     // content is locked if minLevel > level AND user is not author AND user is not admin
@@ -475,7 +498,7 @@ export function PostCard({ post, onToggleLike, onDeletePost, onBlockUser }: Post
                             <h3 className="font-bold text-lg mb-2 leading-tight">{post.title}</h3>
                         )}
                         <p className="whitespace-pre-wrap text-sm leading-relaxed mb-3">
-                            {post.content}
+                            {renderContentWithLinks(post.content)}
                         </p>
                         {post.image_url && (
                             <div className="relative w-full rounded-md overflow-hidden bg-muted/20">
