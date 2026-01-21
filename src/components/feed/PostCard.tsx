@@ -438,29 +438,28 @@ export function PostCard({ post, onToggleLike, onDeletePost, onBlockUser }: Post
                 </DropdownMenu>
             </CardHeader>
             <CardContent className="p-4 pt-2">
-                {post.title && (
-                    <h3 className="font-bold text-lg mb-2 leading-tight">{post.title}</h3>
-                )}
-
                 {isLocked ? (
-                    <div className="relative rounded-md border border-dashed border-red-500/30 bg-red-500/5 p-6 text-center space-y-3">
-                        <div className="mx-auto w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center">
-                            <Lock className="h-5 w-5 text-red-500" />
-                        </div>
-                        <div className="space-y-1">
-                            <h4 className="font-semibold text-red-600">Level {minLevel} Required</h4>
-                            <p className="text-sm text-muted-foreground">
-                                You need to reach level {minLevel} to view this content.
-                                Keep contributing to the community to level up!
+                    <div className="space-y-3">
+                        {/* Show title even when locked */}
+                        {post.title && (
+                            <h3 className="font-bold text-lg leading-tight">{post.title}</h3>
+                        )}
+                        {/* Locked content notice */}
+                        <div className="relative rounded-md border border-dashed border-amber-500/30 bg-amber-500/5 p-4 text-center space-y-2">
+                            <div className="flex items-center justify-center gap-2">
+                                <Lock className="h-4 w-4 text-amber-600" />
+                                <span className="font-medium text-amber-700">Level {minLevel} Required</span>
+                            </div>
+                            <p className="text-xs text-muted-foreground">
+                                Nâng cấp lên Level {minLevel} để xem nội dung này
                             </p>
                         </div>
-                        {/* Show a teaser or blurred content if specific requirement? 
-                             The requirement says "show locked", so this card is good. 
-                             We can optionally show blurred text behind.
-                          */}
                     </div>
                 ) : (
                     <>
+                        {post.title && (
+                            <h3 className="font-bold text-lg mb-2 leading-tight">{post.title}</h3>
+                        )}
                         <p className="whitespace-pre-wrap text-sm leading-relaxed mb-3">
                             {post.content}
                         </p>

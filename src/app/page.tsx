@@ -1,6 +1,6 @@
 "use client";
 
-import { PersonalJournal } from "@/components/journal/PersonalJournal";
+import { Feed } from "@/components/feed/Feed";
 import { LandingPage } from "@/components/landing/LandingPage";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 
@@ -13,5 +13,7 @@ export default function Home() {
     return <LandingPage />;
   }
 
-  return <PersonalJournal />;
+  // Community Feed - shows all public posts from everyone
+  return <Feed />;
 }
+
