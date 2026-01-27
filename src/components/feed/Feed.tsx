@@ -17,7 +17,8 @@ interface FeedProps {
 }
 
 export function Feed({ communityId }: FeedProps) {
-    const { posts, loading, hasMore, loadMore, createPost, toggleLike } = usePosts(communityId);
+    const [selectedTopic, setSelectedTopic] = useState<string>("all");
+    const { posts, loading, hasMore, loadMore, createPost, toggleLike } = usePosts(communityId, selectedTopic);
     const { user } = useSupabaseAuth();
     const { level } = useGamification();
 
@@ -31,9 +32,9 @@ export function Feed({ communityId }: FeedProps) {
         }
     }, [inView, hasMore, loadMore]);
 
-    const handlePost = async (content: string, image?: File, title?: string, minLevel?: number) => {
+    const handlePost = async (content: string, image?: File, title?: string, minLevel?: number, topic?: string) => {
         try {
-            await createPost(content, image, title, minLevel);
+            await createPost(content, image, title, minLevel, topic);
             toast.success("Post created! 📝");
         } catch (error) {
             console.error("Failed to post:", error);
@@ -66,6 +67,28 @@ export function Feed({ communityId }: FeedProps) {
 
     return (
         <div className="space-y-6 max-w-2xl mx-auto pb-10">
+            {/* Topic Filter */}
+            {/* Topic Filter */}
+            <div className="flex gap-2 pb-4 overflow-x-auto no-scrollbar mask-gradient">
+                {[
+                    { id: 'all', label: 'Tất cả' },
+                    { id: 'youtube', label: 'Youtube' },
+                    { id: 'mmo', label: 'MMO' },
+                    { id: 'share', label: 'Chia sẻ' }
+                ].map((t) => (
+                    <button
+                        key={t.id}
+                        onClick={() => setSelectedTopic(t.id)}
+                        className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-200 transform ${selectedTopic === t.id
+                                ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105'
+                                : 'bg-card hover:bg-muted border border-border text-muted-foreground hover:-translate-y-0.5'
+                            }`}
+                    >
+                        {t.label}
+                    </button>
+                ))}
+            </div>
+
             {/* Create Post */}
             {user ? (
                 <div className="mb-6">

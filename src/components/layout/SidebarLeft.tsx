@@ -20,41 +20,53 @@ export function SidebarLeft() {
             <div className="space-y-1">
                 <Button
                     variant={isActive("/") ? "secondary" : "ghost"}
-                    className="w-full justify-start font-medium"
+                    className={`w-full justify-start font-medium transition-all duration-200 ${isActive("/")
+                            ? "bg-primary/10 text-primary border-l-2 border-primary rounded-none rounded-r-lg"
+                            : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                        }`}
                     asChild
                 >
                     <Link href="/">
-                        <Users className="mr-2 h-4 w-4" />
+                        <Users className={`mr-2 h-4 w-4 ${isActive("/") ? "text-primary" : "text-muted-foreground"}`} />
                         {t.nav.community}
                     </Link>
                 </Button>
                 <Button
                     variant={isActive("/journal") ? "secondary" : "ghost"}
-                    className="w-full justify-start font-medium"
+                    className={`w-full justify-start font-medium transition-all duration-200 ${isActive("/journal")
+                            ? "bg-primary/10 text-primary border-l-2 border-primary rounded-none rounded-r-lg"
+                            : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                        }`}
                     asChild
                 >
                     <Link href="/journal">
-                        <NotebookPen className="mr-2 h-4 w-4" />
+                        <NotebookPen className={`mr-2 h-4 w-4 ${isActive("/journal") ? "text-primary" : "text-muted-foreground"}`} />
                         {t.nav.myJournal}
                     </Link>
                 </Button>
                 <Button
                     variant={isActive("/todos") ? "secondary" : "ghost"}
-                    className="w-full justify-start font-medium"
+                    className={`w-full justify-start font-medium transition-all duration-200 ${isActive("/todos")
+                            ? "bg-primary/10 text-primary border-l-2 border-primary rounded-none rounded-r-lg"
+                            : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                        }`}
                     asChild
                 >
                     <Link href="/todos">
-                        <CheckSquare className="mr-2 h-4 w-4" />
+                        <CheckSquare className={`mr-2 h-4 w-4 ${isActive("/todos") ? "text-primary" : "text-muted-foreground"}`} />
                         {t.nav.todoList}
                     </Link>
                 </Button>
                 <Button
                     variant={isActive("/messages") ? "secondary" : "ghost"}
-                    className="w-full justify-start font-medium"
+                    className={`w-full justify-start font-medium transition-all duration-200 ${isActive("/messages")
+                            ? "bg-primary/10 text-primary border-l-2 border-primary rounded-none rounded-r-lg"
+                            : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                        }`}
                     asChild
                 >
                     <Link href="/messages">
-                        <MessageCircle className="mr-2 h-4 w-4" />
+                        <MessageCircle className={`mr-2 h-4 w-4 ${isActive("/messages") ? "text-primary" : "text-muted-foreground"}`} />
                         {t.nav.messages}
                     </Link>
                 </Button>
@@ -63,43 +75,20 @@ export function SidebarLeft() {
             <div>
                 <Button
                     variant={isActive("/courses") ? "secondary" : "ghost"}
-                    className="w-full justify-start font-medium"
+                    className={`w-full justify-start font-medium transition-all duration-200 ${isActive("/courses")
+                            ? "bg-primary/10 text-primary border-l-2 border-primary rounded-none rounded-r-lg"
+                            : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                        }`}
                     asChild
                 >
                     <Link href="/courses">
-                        <BookOpen className="mr-2 h-4 w-4" />
+                        <BookOpen className={`mr-2 h-4 w-4 ${isActive("/courses") ? "text-primary" : "text-muted-foreground"}`} />
                         {t.nav.courses}
                     </Link>
                 </Button>
             </div>
 
-            <div className="pt-4">
-                <h3 className="mb-2 px-4 text-xs font-semibold tracking-tight text-muted-foreground">
-                    {t.nav.community}
-                </h3>
-                <div className="space-y-1">
-                    <Button
-                        variant={isActive("/community/youtube") ? "secondary" : "ghost"}
-                        className="w-full justify-start font-medium"
-                        asChild
-                    >
-                        <Link href="/community/youtube">
-                            <span className="mr-2 text-lg">📺</span>
-                            Youtube
-                        </Link>
-                    </Button>
-                    <Button
-                        variant={isActive("/community/tricks-courses") ? "secondary" : "ghost"}
-                        className="w-full justify-start font-medium"
-                        asChild
-                    >
-                        <Link href="/community/tricks-courses">
-                            <span className="mr-2 text-lg">🎓</span>
-                            Tricks & Courses
-                        </Link>
-                    </Button>
-                </div>
-            </div>
+
 
         </div>
     )

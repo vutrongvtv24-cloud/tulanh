@@ -25,7 +25,7 @@ import EmojiPicker, { Theme, EmojiClickData } from 'emoji-picker-react';
 import { useTheme } from "next-themes";
 
 interface CreatePostProps {
-    onPost: (content: string, image?: File, title?: string, minLevel?: number) => Promise<void>;
+    onPost: (content: string, image?: File, title?: string, minLevel?: number, topic?: string) => Promise<void>;
     user: {
         avatar?: string;
         name: string;
@@ -45,6 +45,7 @@ export function CreatePost({ onPost, user, placeholder, disabled = false, maxLev
     const [content, setContent] = useState("");
     const [title, setTitle] = useState("");
     const [minLevel, setMinLevel] = useState(0);
+    const [topic, setTopic] = useState("share");
     const [isPosting, setIsPosting] = useState(false);
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -83,6 +84,7 @@ export function CreatePost({ onPost, user, placeholder, disabled = false, maxLev
         setContent("");
         setTitle("");
         setMinLevel(0);
+        setTopic("share");
         clearImage();
     };
 
@@ -91,7 +93,7 @@ export function CreatePost({ onPost, user, placeholder, disabled = false, maxLev
 
         try {
             setIsPosting(true);
-            await onPost(content, selectedImage || undefined, title, minLevel);
+            await onPost(content, selectedImage || undefined, title, minLevel, topic);
             resetForm();
             setIsOpen(false);
         } finally {
@@ -185,6 +187,18 @@ export function CreatePost({ onPost, user, placeholder, disabled = false, maxLev
                                 onChange={(e) => setTitle(e.target.value)}
                                 autoFocus
                             />
+
+                            <div className="flex gap-2">
+                                <select
+                                    value={topic}
+                                    onChange={(e) => setTopic(e.target.value)}
+                                    className="bg-muted/50 border-none rounded px-2 py-1 text-sm font-medium focus:outline-none"
+                                >
+                                    <option value="share">Chia sẻ (Share)</option>
+                                    <option value="youtube">Youtube</option>
+                                    <option value="mmo">MMO</option>
+                                </select>
+                            </div>
 
                             <MarkdownEditor
                                 value={content}

@@ -71,6 +71,7 @@ export interface Database {
                     status: 'approved' | 'pending' | 'rejected'
                     created_at: string
                     updated_at: string
+                    topic: string
                 }
                 Insert: {
                     id?: string
@@ -85,6 +86,7 @@ export interface Database {
                     status?: 'approved' | 'pending' | 'rejected'
                     created_at?: string
                     updated_at?: string
+                    topic?: string
                 }
                 Update: {
                     id?: string
@@ -99,6 +101,7 @@ export interface Database {
                     status?: 'approved' | 'pending' | 'rejected'
                     created_at?: string
                     updated_at?: string
+                    topic?: string
                 }
             }
             communities: {

@@ -37,7 +37,7 @@ export type UI_Post = {
 
 const PAGE_SIZE = 5; // Load 5 posts at a time
 
-export function usePosts(communitySlug?: string) {
+export function usePosts(communitySlug?: string, topic?: string) {
     const [posts, setPosts] = useState<UI_Post[]>([]);
     const [loading, setLoading] = useState(true);
     const [hasMore, setHasMore] = useState(true);
@@ -123,9 +123,10 @@ export function usePosts(communitySlug?: string) {
 
             if (communityId) {
                 query = query.eq('community_id', communityId);
-            } else if (communitySlug) {
-                // Slug provided but ID not solved (should cause empty return or loading)
-                // Actually handled by early return above.
+            }
+
+            if (topic && topic !== 'all') {
+                query = query.eq('topic', topic);
             }
             // If no community specified, get ALL posts (both global and community posts)
 
@@ -226,7 +227,7 @@ export function usePosts(communitySlug?: string) {
         } finally {
             setLoading(false);
         }
-    }, [supabase, user, communityId]);
+    }, [supabase, user, communityId, topic]);
 
     const loadMore = useCallback(() => {
         if (!hasMore || loading) return;
@@ -273,7 +274,7 @@ export function usePosts(communitySlug?: string) {
     }, [supabase, communityId]);
 
 
-    const createPost = async (content: string, imageFile?: File, title?: string, minLevel?: number) => {
+    const createPost = async (content: string, imageFile?: File, title?: string, minLevel?: number, topic?: string) => {
         if (!user) return;
 
         let imageUrl: string | undefined;
@@ -296,6 +297,7 @@ export function usePosts(communitySlug?: string) {
             community_id: communityId || null,
             title: title || null,
             min_level_to_view: minLevel || 0,
+            topic: topic || 'share',
         }).select().single();
 
         if (error) throw error;

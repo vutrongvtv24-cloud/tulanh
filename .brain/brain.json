@@ -1,0 +1,75 @@
+{
+    "meta": {
+        "schema_version": "1.1.0",
+        "awf_version": "3.3.0"
+    },
+    "project": {
+        "name": "Builder Ecosystem Clone",
+        "type": "Community & Education Platform",
+        "status": "In Development"
+    },
+    "tech_stack": {
+        "frontend": {
+            "framework": "Next.js 16 (App Router)",
+            "language": "TypeScript",
+            "ui_library": "Shadcn/UI",
+            "styling": "TailwindCSS"
+        },
+        "backend": {
+            "framework": "Next.js Server Actions",
+            "database": "Supabase (PostgreSQL)",
+            "auth": "Supabase Auth"
+        },
+        "database": {
+            "type": "PostgreSQL (via Supabase)",
+            "orm": "None (Raw SQL / Supabase Client)"
+        }
+    },
+    "database_schema": {
+        "summary": "Project uses a modular schema with core tables + feature-specific modules.",
+        "modules": [
+            "COMPLETE_SETUP.sql (Core)",
+            "badges.sql (Gamification)",
+            "chat.sql (Messaging)",
+            "follows.sql (Social Graph)",
+            "likes_comments.sql (Engagement)",
+            "notifications.sql (System)",
+            "xp_system.sql (Gamification Logic)"
+        ],
+        "relationships_explained": "Users have Profiles. Users can Follow each other. Posts can be Liked/Commented. Users earn XP and Badges."
+    },
+    "features": [
+        {
+            "name": "Auth",
+            "status": "Implemented",
+            "description": "User authentication via Supabase"
+        },
+        {
+            "name": "Gamification",
+            "status": "In Progress",
+            "description": "XP System, Ranks (1-5), Badges, Leaderboards"
+        },
+        {
+            "name": "Community",
+            "status": "Active",
+            "description": "Newsfeed, Posts, Likes, Comments"
+        },
+        {
+            "name": "Classroom",
+            "status": "Planned",
+            "description": "Course catalog and lesson viewer"
+        },
+        {
+            "name": "Productivity Tools",
+            "status": "Implemented",
+            "description": "Todos, Journal, Pomodoro Timer"
+        }
+    ],
+    "knowledge_items": {
+        "gotchas": [],
+        "patterns": [
+            "Supabase RLS for security",
+            "Next.js Server Components for data fetching"
+        ]
+    }
+}
