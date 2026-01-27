@@ -125,9 +125,7 @@ export function CreatePost({ onPost, user, placeholder, disabled = false, maxLev
                                     <AvatarFallback>{user.name?.[0] || "U"}</AvatarFallback>
                                 </Avatar>
                                 <div className="flex-1 bg-muted/50 hover:bg-muted/80 h-10 rounded-full px-4 flex items-center text-muted-foreground text-sm transition-colors">
-                                    {language === 'vi'
-                                        ? `Bạn đang nghĩ gì thế, ${user.name?.split(' ').pop()}?`
-                                        : `What's on your mind, ${user.name?.split(' ').pop()}?`}
+                                    {t.feed.whatsOnYourMind}
                                 </div>
                             </div>
                             <div className="flex items-center justify-between pt-3 mt-3 border-t">
@@ -137,7 +135,7 @@ export function CreatePost({ onPost, user, placeholder, disabled = false, maxLev
                                     onClick={(e) => { e.stopPropagation(); setIsOpen(true); setTimeout(() => triggerFileInput(), 200); }}
                                 >
                                     <ImageIcon className="h-5 w-5 text-green-500" />
-                                    <span className="text-xs sm:text-sm font-medium">{language === 'vi' ? 'Ảnh/Video' : 'Photo/Video'}</span>
+                                    <span className="text-xs sm:text-sm font-medium">{t.feed.photoVideo}</span>
                                 </Button>
                             </div>
                         </CardContent>
@@ -148,7 +146,7 @@ export function CreatePost({ onPost, user, placeholder, disabled = false, maxLev
                 <DialogContent className="sm:max-w-[550px] p-0 gap-0 overflow-hidden flex flex-col max-h-[90vh]">
                     <DialogHeader className="p-4 border-b flex flex-row items-center justify-between space-y-0">
                         <DialogTitle className="text-center text-lg font-bold flex-1">
-                            {language === 'vi' ? 'Tạo bài viết' : 'Create Post'}
+                            {t.feed.post}
                         </DialogTitle>
                     </DialogHeader>
 
@@ -165,10 +163,10 @@ export function CreatePost({ onPost, user, placeholder, disabled = false, maxLev
                                     value={visibility}
                                     onChange={(e) => setVisibility(e.target.value as 'public' | 'private')}
                                     className="mt-1 h-6 text-[10px] px-2 rounded bg-muted border-none focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer"
-                                    title={language === 'vi' ? 'Chế độ hiển thị' : 'Visibility'}
+                                    title={t.feed.visibility.label}
                                 >
-                                    <option value="public">🌐 Public</option>
-                                    <option value="private">🔒 Private</option>
+                                    <option value="public">🌐 {t.feed.visibility.public}</option>
+                                    <option value="private">🔒 {t.feed.visibility.private}</option>
                                 </select>
                             </div>
                         </div>
@@ -177,7 +175,7 @@ export function CreatePost({ onPost, user, placeholder, disabled = false, maxLev
                         <div className="space-y-3">
                             <input
                                 className="w-full bg-transparent border-none focus:outline-none text-lg font-semibold placeholder:text-muted-foreground"
-                                placeholder={language === 'vi' ? "Tiêu đề (Tùy chọn)" : "Title (Optional)"}
+                                placeholder={t.journal.title}
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 autoFocus
@@ -189,9 +187,9 @@ export function CreatePost({ onPost, user, placeholder, disabled = false, maxLev
                                     onChange={(e) => setTopic(e.target.value)}
                                     className="bg-muted/50 border-none rounded px-2 py-1 text-sm font-medium focus:outline-none"
                                 >
-                                    <option value="share">Chia sẻ (Share)</option>
-                                    <option value="youtube">Youtube</option>
-                                    <option value="mmo">MMO</option>
+                                    <option value="share">{t.feed.topics.share}</option>
+                                    <option value="youtube">{t.feed.topics.youtube}</option>
+                                    <option value="mmo">{t.feed.topics.mmo}</option>
                                 </select>
                             </div>
 
@@ -221,7 +219,7 @@ export function CreatePost({ onPost, user, placeholder, disabled = false, maxLev
                         {/* Add-ons & Settings Container */}
                         <div className="mt-4 border rounded-lg p-3 shadow-sm flex items-center justify-between">
                             <span className="text-sm font-semibold pl-2">
-                                {language === 'vi' ? 'Thêm vào bài viết' : 'Add to your post'}
+                                {t.feed.addToPost}
                             </span>
                             <div className="flex items-center gap-1">
                                 <Button
@@ -253,7 +251,7 @@ export function CreatePost({ onPost, user, placeholder, disabled = false, maxLev
 
                                 {/* Min Level Setting (Compact) */}
                                 <div className="flex items-center gap-1 ml-2 pl-2 border-l">
-                                    <span className="text-xs text-muted-foreground whitespace-nowrap">LV Min:</span>
+                                    <span className="text-xs text-muted-foreground whitespace-nowrap">{t.feed.minLevel}:</span>
                                     <input
                                         type="number"
                                         min="0"
@@ -273,9 +271,7 @@ export function CreatePost({ onPost, user, placeholder, disabled = false, maxLev
                             onClick={handleSubmit}
                             disabled={(!content.trim() && !selectedImage && !title.trim()) || isPosting}
                         >
-                            {isPosting
-                                ? (language === 'vi' ? 'Đang đăng...' : 'Posting...')
-                                : (language === 'vi' ? 'Đăng' : 'Post')}
+                            {isPosting ? t.feed.posting : t.feed.post}
                         </Button>
                     </DialogFooter>
                 </DialogContent>

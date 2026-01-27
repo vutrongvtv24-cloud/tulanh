@@ -8,9 +8,11 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 import { toast } from "sonner";
 import { useCalendarSync } from "@/hooks/useCalendarSync";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function TodosSidebar() {
     const [date, setDate] = useState<Date | undefined>(new Date());
+    const { t } = useLanguage();
 
     return (
         <div className="space-y-6">
@@ -19,7 +21,7 @@ export function TodosSidebar() {
             <Card>
                 <CardHeader>
                     <CardTitle className="text-sm font-bold flex justify-between items-center">
-                        <span>Lịch làm việc</span>
+                        <span>{t.todo.calendar}</span>
                         <SyncButton />
                     </CardTitle>
                 </CardHeader>
@@ -32,7 +34,7 @@ export function TodosSidebar() {
                     />
                 </CardContent>
                 <div className="px-4 pb-4 text-xs text-muted-foreground text-center">
-                    Chọn ngày để xem lịch sử công việc
+                    {t.todo.selectDate}
                 </div>
             </Card>
         </div>
@@ -41,6 +43,7 @@ export function TodosSidebar() {
 
 function SyncButton() {
     const { syncToCalendar, isSyncing } = useCalendarSync();
+    const { t } = useLanguage();
 
     // Test sync
     const handleSync = () => {
@@ -52,7 +55,7 @@ function SyncButton() {
 
     return (
         <Button variant="outline" size="sm" onClick={handleSync} disabled={isSyncing}>
-            {isSyncing ? <RefreshCw className="h-3 w-3 animate-spin" /> : "Sync Google"}
+            {isSyncing ? <RefreshCw className="h-3 w-3 animate-spin" /> : t.todo.syncGoogle}
         </Button>
     )
 }
@@ -68,6 +71,7 @@ function PomodoroTimer() {
     const [isActive, setIsActive] = useState(false);
     const [mode, setMode] = useState<'work' | 'rest'>('work');
     const timerRef = useRef<NodeJS.Timeout | null>(null);
+    const { t } = useLanguage();
 
     const toggleTimer = () => {
         setIsActive(!isActive);
@@ -91,9 +95,9 @@ function PomodoroTimer() {
 
             // Play notification sound or toast
             if (mode === 'work') {
-                toast.success("Đã xong phiên làm việc! Hãy nghỉ ngơi 5 phút ☕");
+                toast.success(t.todo.pomodoro.finishedWork);
             } else {
-                toast.info("Hết giờ nghỉ! Quay lại làm việc nào 🧠");
+                toast.info(t.todo.pomodoro.finishedRest);
             }
 
             // Auto continue or stop? User asked for "run automatically"
@@ -118,7 +122,7 @@ function PomodoroTimer() {
             <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-bold flex items-center gap-2">
                     {mode === 'work' ? <Brain className="h-4 w-4 text-primary" /> : <Coffee className="h-4 w-4 text-green-500" />}
-                    {mode === 'work' ? "Deep Work" : "Nghỉ ngơi"}
+                    {mode === 'work' ? t.todo.pomodoro.deepWork : t.todo.pomodoro.rest}
                 </CardTitle>
             </CardHeader>
             <CardContent>
@@ -142,7 +146,7 @@ function PomodoroTimer() {
                         className={mode === 'rest' && !isActive ? "bg-green-600 hover:bg-green-700" : ""}
                     >
                         {isActive ? <Pause className="h-4 w-4 mr-1" /> : <Play className="h-4 w-4 mr-1" />}
-                        {isActive ? "Tạm dừng" : "Bắt đầu"}
+                        {isActive ? t.todo.pomodoro.pause : t.todo.pomodoro.start}
                     </Button>
                     <Button variant="outline" size="sm" onClick={resetTimer}>
                         <RefreshCw className="h-4 w-4" />

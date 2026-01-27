@@ -40,6 +40,23 @@ export const en = {
         noPostsYet: "No posts yet",
         delete: "Delete",
         edit: "Edit",
+        photoVideo: "Photo/Video",
+        addToPost: "Add to your post",
+        posting: "Posting...",
+        minLevel: "Min Level",
+        topics: {
+            all: "All",
+            youtube: "Youtube",
+            mmo: "MMO",
+            share: "Share",
+        },
+        visibility: {
+            label: "Visibility",
+            public: "Public",
+            private: "Private",
+        },
+        loginToShare: "Log in to share your journey.",
+        reachedEnd: "You've reached the end! 🎉",
     },
 
     // Profile
@@ -106,6 +123,27 @@ export const en = {
         noTasks: "No tasks yet",
         complete: "Complete",
         delete: "Delete",
+        supportTools: "Support Tools",
+        calendar: "Work Calendar",
+        selectDate: "Select date to view task history",
+        syncGoogle: "Sync Google",
+        pomodoro: {
+            deepWork: "Deep Work",
+            rest: "Rest",
+            start: "Start",
+            pause: "Pause",
+            finishedWork: "Session finished! Take a 5 min break ☕",
+            finishedRest: "Break over! Back to work 🧠",
+        },
+        stats: {
+            completed: "Completed",
+            pending: "Pending",
+        },
+        loginRequired: "Login to use Todo List",
+        loginDesc: "You need to login to manage your tasks.",
+        manageDaily: "Manage your daily tasks",
+        firstTask: "Add your first task!",
+        noTasksDesc: "No tasks yet",
     },
 
     // Journal
@@ -137,6 +175,22 @@ export const en = {
         imageLimitReached: "Image post limit reached",
     },
 
+    // Admin
+    admin: {
+        pendingApproval: "Pending Approval",
+        votes: "votes",
+        voteOk: "Vote OK",
+        deleteAdmin: "Delete (Admin)",
+        blockUser: "Block User",
+        reportPost: "Report Post",
+    },
+
+    // Comments
+    comments: {
+        noComments: "No comments yet. Be the first!",
+        loginToComment: "Sign in to comment",
+    },
+
     // Common
     common: {
         save: "Save",
@@ -146,6 +200,7 @@ export const en = {
         close: "Close",
         confirm: "Confirm",
         loading: "Loading...",
+        saving: "Saving...",
     },
 };
 

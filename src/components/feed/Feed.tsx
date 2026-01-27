@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { CreatePost } from "./CreatePost";
 import { useInView } from "react-intersection-observer";
 import { useGamification } from "@/context/GamificationContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface FeedProps {
     communityId?: string;
@@ -21,6 +22,7 @@ export function Feed({ communityId }: FeedProps) {
     const { posts, loading, hasMore, loadMore, createPost, toggleLike } = usePosts(communityId, selectedTopic);
     const { user } = useSupabaseAuth();
     const { level } = useGamification();
+    const { t } = useLanguage();
 
     // Infinite Scroll Ref
     // When this element comes into view, we trigger loadMore
@@ -35,7 +37,7 @@ export function Feed({ communityId }: FeedProps) {
     const handlePost = async (content: string, image?: File, title?: string, minLevel?: number, topic?: string, visibility?: 'public' | 'private') => {
         try {
             await createPost(content, image, title, minLevel, topic, visibility);
-            toast.success("Post created! 📝");
+            toast.success(t.toast.postCreated);
         } catch (error) {
             console.error("Failed to post:", error);
             toast.error("Failed to create post. Please try again.");
@@ -71,10 +73,10 @@ export function Feed({ communityId }: FeedProps) {
             {/* Topic Filter */}
             <div className="flex gap-2 pb-4 overflow-x-auto no-scrollbar mask-gradient">
                 {[
-                    { id: 'all', label: 'Tất cả' },
-                    { id: 'youtube', label: 'Youtube' },
-                    { id: 'mmo', label: 'MMO' },
-                    { id: 'share', label: 'Chia sẻ' }
+                    { id: 'all', label: t.feed.topics.all },
+                    { id: 'youtube', label: t.feed.topics.youtube },
+                    { id: 'mmo', label: t.feed.topics.mmo },
+                    { id: 'share', label: t.feed.topics.share }
                 ].map((t) => (
                     <button
                         key={t.id}
@@ -104,7 +106,7 @@ export function Feed({ communityId }: FeedProps) {
                 </div>
             ) : (
                 <Card className="mb-6 text-center py-6 bg-muted/20 border-dashed">
-                    <p className="text-muted-foreground">Log in to share your journey.</p>
+                    <p className="text-muted-foreground">{t.feed.loginToShare}</p>
                 </Card>
             )}
 
@@ -126,7 +128,7 @@ export function Feed({ communityId }: FeedProps) {
 
             {!hasMore && posts.length > 0 && (
                 <p className="text-center text-muted-foreground text-sm py-8">
-                    You've reached the end! 🎉
+                    {t.feed.reachedEnd}
                 </p>
             )}
         </div>

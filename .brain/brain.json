@@ -74,7 +74,9 @@
         "gotchas": [],
         "patterns": [
             "Supabase RLS for security",
-            "Next.js Server Components for data fetching"
+            "Next.js Server Components for data fetching",
+            "Internationalization (i18n): Full En/Vi support via LanguageContext",
+            "PostCard Refactor: Split into sub-components (Header, Content, Actions, Comments, Approval)"
         ]
     }
 }

@@ -42,6 +42,23 @@ export const vi: TranslationKeys = {
         noPostsYet: "Chưa có bài viết nào",
         delete: "Xóa",
         edit: "Chỉnh sửa",
+        photoVideo: "Ảnh/Video",
+        addToPost: "Thêm vào bài viết",
+        posting: "Đang đăng...",
+        minLevel: "Level tối thiểu",
+        topics: {
+            all: "Tất cả",
+            youtube: "Youtube",
+            mmo: "MMO",
+            share: "Chia sẻ",
+        },
+        visibility: {
+            label: "Chế độ",
+            public: "Công khai",
+            private: "Riêng tư",
+        },
+        loginToShare: "Đăng nhập để chia sẻ hành trình của bạn.",
+        reachedEnd: "Bạn đã xem hết bài viết! 🎉",
     },
 
     // Profile
@@ -108,6 +125,27 @@ export const vi: TranslationKeys = {
         noTasks: "Chưa có việc nào",
         complete: "Hoàn thành",
         delete: "Xóa",
+        supportTools: "Công cụ hỗ trợ",
+        calendar: "Lịch làm việc",
+        selectDate: "Chọn ngày để xem lịch sử công việc",
+        syncGoogle: "Đồng bộ Google",
+        pomodoro: {
+            deepWork: "Tập trung",
+            rest: "Nghỉ ngơi",
+            start: "Bắt đầu",
+            pause: "Tạm dừng",
+            finishedWork: "Đã xong phiên làm việc! Hãy nghỉ ngơi 5 phút ☕",
+            finishedRest: "Hết giờ nghỉ! Quay lại làm việc nào 🧠",
+        },
+        stats: {
+            completed: "Hoàn thành",
+            pending: "Chờ xử lý",
+        },
+        loginRequired: "Đăng nhập để sử dụng Todo List",
+        loginDesc: "Bạn cần đăng nhập để quản lý danh sách công việc của mình.",
+        manageDaily: "Quản lý công việc hàng ngày của bạn",
+        firstTask: "Thêm công việc đầu tiên của bạn!",
+        noTasksDesc: "Chưa có công việc nào",
     },
 
     // Journal
@@ -139,6 +177,22 @@ export const vi: TranslationKeys = {
         imageLimitReached: "Bạn đã hết lượt đăng ảnh",
     },
 
+    // Admin
+    admin: {
+        pendingApproval: "Đang chờ duyệt",
+        votes: "lượt bình chọn",
+        voteOk: "Duyệt luôn",
+        deleteAdmin: "Xóa bài (Admin)",
+        blockUser: "Chặn người dùng",
+        reportPost: "Báo cáo bài viết",
+    },
+
+    // Comments
+    comments: {
+        noComments: "Chưa có bình luận. Hãy là người đầu tiên!",
+        loginToComment: "Đăng nhập để bình luận",
+    },
+
     // Common
     common: {
         save: "Lưu",
@@ -148,5 +202,6 @@ export const vi: TranslationKeys = {
         close: "Đóng",
         confirm: "Xác nhận",
         loading: "Đang tải...",
+        saving: "Đang lưu...",
     },
 };
