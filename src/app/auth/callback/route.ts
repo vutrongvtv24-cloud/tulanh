@@ -14,12 +14,9 @@ export async function GET(request: Request) {
 
         if (!error) {
             const forwardedHost = request.headers.get('x-forwarded-host')
-            const isProd = forwardedHost === 'tulanh.online' || requestUrl.host === 'tulanh.online'
-
-            if (isProd) {
+            if (process.env.NODE_ENV === 'production') {
                 return NextResponse.redirect(`https://tulanh.online${next}`)
             }
-
             return NextResponse.redirect(`${requestUrl.origin}${next}`)
         } else {
             console.error('Auth callback error:', error)
