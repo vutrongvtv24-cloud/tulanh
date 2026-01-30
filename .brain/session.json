@@ -1,65 +1,117 @@
 {
-    "updated_at": "2026-01-27T12:08:00+07:00",
+    "updated_at": "2026-01-30T12:40:00+07:00",
     "working_on": {
-        "feature": "Deployment",
-        "task": "VPS Setup & Optimization",
+        "feature": "Tủ Lạnh (MarkNote) Module",
+        "task": "COMPLETE - Saved to Brain",
         "status": "complete",
         "files": [
-            "docs/DEPLOYMENT_GUIDE.md",
-            "package.json"
+            "supabase/migrations/20260130_create_notes_tables.sql",
+            "src/types/notes.ts",
+            "src/app/actions/notes.ts",
+            "src/app/actions/tags.ts",
+            "src/app/notes/page.tsx",
+            "src/components/notes/NoteCard.tsx",
+            "src/components/notes/NoteEditor.tsx",
+            "src/components/notes/TagTree.tsx",
+            "src/components/layout/SidebarLeft.tsx"
         ],
-        "notes": "Deployed to tulanh.online. Configured Nginx Reverse Proxy, SSL, and PM2. Created update-web script."
+        "notes": "🎉 TỦ LẠNH MODULE HOÀN THÀNH! 7/7 phases. Bug fixed: infinite loop resolved. Route: /notes"
     },
     "pending_tasks": [
         {
-            "task": "Deploy Database Migration to Production",
-            "priority": "critical",
-            "notes": "Run 20260127_add_topic_to_posts.sql on Supabase Dashboard"
+            "task": "Deploy Tủ Lạnh to Production",
+            "priority": "high",
+            "notes": "Run /deploy to push changes"
         },
         {
             "task": "Refine Classroom/Courses Feature",
-            "priority": "high",
-            "notes": "Next phase"
+            "priority": "medium",
+            "notes": "Next major feature"
+        },
+        {
+            "task": "Add pagination for comments",
+            "priority": "low",
+            "notes": "Audit suggestion"
         }
     ],
     "recent_changes": [
         {
-            "timestamp": "2026-01-27T12:00:00+07:00",
-            "type": "ui",
-            "description": "Fixed text contrast on Rank Badges (White text on Dark bg)",
+            "timestamp": "2026-01-30T12:10:00+07:00",
+            "type": "bugfix",
+            "description": "Fixed infinite rendering loop in Notes page - removed loading from useEffect deps",
             "files": [
-                "src/components/layout/SidebarRight.tsx"
+                "src/app/notes/page.tsx"
             ]
         },
         {
-            "timestamp": "2026-01-27T11:45:00+07:00",
-            "type": "ui",
-            "description": "Implemented Deep Glass Theme & Feed Filter Pills",
-            "files": [
-                "src/app/globals.css",
-                "src/components/feed/Feed.tsx"
-            ]
-        },
-        {
-            "timestamp": "2026-01-27T11:30:00+07:00",
+            "timestamp": "2026-01-30T12:05:00+07:00",
             "type": "feature",
-            "description": "Added Topic Selection & Filtering to Community Feed",
+            "description": "Integrated Tủ Lạnh into Sidebar navigation",
             "files": [
-                "src/hooks/usePosts.ts",
-                "src/components/feed/CreatePost.tsx"
+                "src/components/layout/SidebarLeft.tsx"
             ]
         },
         {
-            "timestamp": "2026-01-27T11:00:00+07:00",
-            "type": "database",
-            "description": "Added 'topic' column to posts table",
+            "timestamp": "2026-01-30T12:00:00+07:00",
+            "type": "feature",
+            "description": "Created Notes UI: page, NoteCard, NoteEditor, TagTree components",
             "files": [
-                "supabase/migrations/20260127_add_topic_to_posts.sql"
+                "src/app/notes/page.tsx",
+                "src/components/notes/NoteCard.tsx",
+                "src/components/notes/NoteEditor.tsx",
+                "src/components/notes/TagTree.tsx"
+            ]
+        },
+        {
+            "timestamp": "2026-01-30T11:30:00+07:00",
+            "type": "feature",
+            "description": "Created Server Actions for notes and tags CRUD with URL metadata fetching",
+            "files": [
+                "src/types/notes.ts",
+                "src/app/actions/notes.ts",
+                "src/app/actions/tags.ts"
+            ]
+        },
+        {
+            "timestamp": "2026-01-30T11:15:00+07:00",
+            "type": "database",
+            "description": "Created and applied notes, tags, note_tags migration to Production",
+            "files": [
+                "supabase/migrations/20260130_create_notes_tables.sql"
+            ]
+        },
+        {
+            "timestamp": "2026-01-30T11:07:00+07:00",
+            "type": "planning",
+            "description": "Created 7-phase plan for Tủ Lạnh module with specs and phase files",
+            "files": [
+                "docs/BRIEF_tulalanh.md",
+                "docs/specs/tulalanh_spec.md",
+                "plans/260130-1107-tulalanh/plan.md"
             ]
         }
     ],
-    "errors_encountered": [],
+    "errors_encountered": [
+        {
+            "error": "Infinite rendering loop on Notes page",
+            "solution": "Removed 'loading' and 'fetchNotes' from useEffect dependency array. Changed to search-only mode.",
+            "resolved": true,
+            "file": "src/app/notes/page.tsx"
+        }
+    ],
     "decisions_made": [
+        {
+            "decision": "Search-only mode for Notes page",
+            "reason": "User requested not to auto-load all notes - only display search results"
+        },
+        {
+            "decision": "Integrated URL metadata fetch into Server Actions",
+            "reason": "Avoid need for separate Supabase Edge Function deployment"
+        },
+        {
+            "decision": "Hierarchical tags as full paths",
+            "reason": "Simpler querying with 'tag1/subtag' format, denormalized 'level' for quick depth"
+        },
         {
             "decision": "Use Pills for Feed Filtering",
             "reason": "Cleaner UI, easy to switch topics"

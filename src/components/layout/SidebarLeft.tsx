@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Lock, Home, Hash, MessageCircle, BookOpen, CheckSquare, NotebookPen, Users } from "lucide-react";
+import { Lock, Home, Hash, MessageCircle, BookOpen, CheckSquare, NotebookPen, Users, StickyNote } from "lucide-react";
 import { RPG_CLASSES, SPACES } from "@/data/mock";
 import Link from "next/link";
 import { useGamification } from "@/context/GamificationContext";
@@ -55,6 +55,19 @@ export function SidebarLeft() {
                     <Link href="/todos">
                         <CheckSquare className={`mr-2 h-4 w-4 ${isActive("/todos") ? "text-primary-foreground" : "text-muted-foreground group-hover:text-foreground"}`} />
                         {t.nav.todoList}
+                    </Link>
+                </Button>
+                <Button
+                    variant="ghost"
+                    className={`w-full justify-start font-medium transition-all duration-200 ${isActive("/notes")
+                        ? "bg-primary/20 text-primary-foreground border-l-4 border-primary rounded-r-full"
+                        : "text-muted-foreground hover:text-foreground hover:bg-white/10"
+                        }`}
+                    asChild
+                >
+                    <Link href="/notes">
+                        <StickyNote className={`mr-2 h-4 w-4 ${isActive("/notes") ? "text-primary-foreground" : "text-muted-foreground group-hover:text-foreground"}`} />
+                        Tủ Lạnh
                     </Link>
                 </Button>
                 <Button
