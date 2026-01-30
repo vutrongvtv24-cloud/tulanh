@@ -106,6 +106,15 @@ export default function NotesPage() {
         return () => clearTimeout(timer);
     }, [searchQuery, user]);
 
+    // Fetch notes when tag filter changes
+    useEffect(() => {
+        if (selectedTagId && user) {
+            fetchNotes();
+        } else if (!selectedTagId && !searchQuery.trim()) {
+            setNotes([]); // Clear when no filter
+        }
+    }, [selectedTagId, user, fetchNotes, searchQuery]);
+
     // Handle tag filter
     const handleTagClick = (tagId: string) => {
         setSelectedTagId(prev => prev === tagId ? null : tagId);
@@ -161,7 +170,7 @@ export default function NotesPage() {
     }
 
     return (
-        <div className="max-w-3xl mx-auto space-y-6 pb-10">
+        <div className="max-w-2xl mx-auto space-y-6 pb-10">
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div>
