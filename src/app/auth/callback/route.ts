@@ -8,20 +8,22 @@ export async function GET(request: Request) {
     const code = requestUrl.searchParams.get('code')
     const next = requestUrl.searchParams.get('next') ?? '/'
 
+    // Use NEXT_PUBLIC_SITE_URL to prevent localhost redirect when behind proxy
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NODE_ENV === 'production'
+        ? 'https://tulanh.online'
+        : requestUrl.origin
+
     if (code) {
         const supabase = await createClient()
         const { error } = await supabase.auth.exchangeCodeForSession(code)
 
         if (!error) {
-            if (process.env.NODE_ENV === 'production') {
-                return NextResponse.redirect(`https://tulanh.online${next}`)
-            }
-            return NextResponse.redirect(`${requestUrl.origin}${next}`)
+            return NextResponse.redirect(`${siteUrl}${next}`)
         } else {
             console.error('Auth callback error:', error)
         }
     }
 
     // return the user to an error page with instructions
-    return NextResponse.redirect(`${requestUrl.origin}/auth?error=auth_code_error`)
+    return NextResponse.redirect(`${siteUrl}/auth?error=auth_code_error`)
 }
