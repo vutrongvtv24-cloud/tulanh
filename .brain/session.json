@@ -1,134 +1,88 @@
 {
-    "updated_at": "2026-01-30T14:26:00+07:00",
+    "updated_at": "2026-02-05T11:23:00Z",
     "working_on": {
-        "feature": "Tủ Lạnh (MarkNote) Module",
-        "task": "READY FOR DEPLOY - Pending git push",
-        "status": "deploy_pending",
+        "feature": "Code Quality & Refactoring",
+        "task": "Hoàn tất refactoring và audit",
+        "status": "completed",
         "files": [
-            "supabase/migrations/20260130_create_notes_tables.sql",
-            "src/types/notes.ts",
-            "src/app/actions/notes.ts",
-            "src/app/actions/tags.ts",
-            "src/app/notes/page.tsx",
-            "src/components/notes/NoteCard.tsx",
-            "src/components/notes/NoteEditor.tsx",
-            "src/components/notes/TagTree.tsx",
-            "src/components/layout/SidebarLeft.tsx"
+            "src/app/class/[slug]/page.tsx",
+            "src/context/GamificationContext.tsx",
+            "src/components/class/AdminDashboard.tsx",
+            "src/components/class/ClassHeader.tsx",
+            "src/components/class/ContentLocked.tsx"
         ],
-        "notes": "🎉 TỦ LẠNH HOÀN THÀNH! Wording: kiến thức. Layout fixed. Route: /notes. Commit ready."
+        "blockers": [],
+        "notes": "Đã refactor, audit, và update dependencies"
     },
-    "pending_tasks": [
-        {
-            "task": "Git push và deploy lên VPS",
-            "priority": "high",
-            "notes": "Commit đã sẵn sàng, chờ approve và push"
-        },
-        {
-            "task": "Refine Classroom/Courses Feature",
-            "priority": "medium",
-            "notes": "Next major feature"
-        },
-        {
-            "task": "Add pagination for comments",
-            "priority": "low",
-            "notes": "Audit suggestion"
-        }
-    ],
+    "pending_tasks": [],
     "recent_changes": [
         {
-            "timestamp": "2026-01-30T14:12:00+07:00",
-            "type": "ui-fix",
-            "description": "Fixed layout overlap with Leaderboard - changed max-w-4xl to max-w-3xl",
+            "timestamp": "2026-02-05T11:00:00Z",
+            "type": "refactor",
+            "description": "Tách AdminDashboard từ class page",
             "files": [
-                "src/app/notes/page.tsx"
+                "src/components/class/AdminDashboard.tsx"
             ]
         },
         {
-            "timestamp": "2026-01-30T14:04:00+07:00",
-            "type": "wording",
-            "description": "Changed all 'ghi chú' to 'kiến thức' across Notes module",
+            "timestamp": "2026-02-05T11:05:00Z",
+            "type": "fix",
+            "description": "Fix getXpReason hoisting error",
             "files": [
-                "src/app/notes/page.tsx",
-                "src/components/notes/NoteCard.tsx",
-                "src/components/notes/NoteEditor.tsx"
+                "src/context/GamificationContext.tsx"
             ]
         },
         {
-            "timestamp": "2026-01-30T12:05:00+07:00",
-            "type": "feature",
-            "description": "Integrated Tủ Lạnh into Sidebar navigation",
+            "timestamp": "2026-02-05T11:10:00Z",
+            "type": "update",
+            "description": "Update @supabase/supabase-js 2.90.1 → 2.94.1",
             "files": [
-                "src/components/layout/SidebarLeft.tsx"
+                "package.json"
             ]
         },
         {
-            "timestamp": "2026-01-30T12:00:00+07:00",
-            "type": "feature",
-            "description": "Created Notes UI: page, NoteCard, NoteEditor, TagTree components",
+            "timestamp": "2026-02-05T11:12:00Z",
+            "type": "audit",
+            "description": "Full security audit - Supabase dashboard + code",
             "files": [
-                "src/app/notes/page.tsx",
-                "src/components/notes/NoteCard.tsx",
-                "src/components/notes/NoteEditor.tsx",
-                "src/components/notes/TagTree.tsx"
-            ]
-        },
-        {
-            "timestamp": "2026-01-30T11:30:00+07:00",
-            "type": "feature",
-            "description": "Created Server Actions for notes and tags CRUD with URL metadata fetching",
-            "files": [
-                "src/types/notes.ts",
-                "src/app/actions/notes.ts",
-                "src/app/actions/tags.ts"
-            ]
-        },
-        {
-            "timestamp": "2026-01-30T11:15:00+07:00",
-            "type": "database",
-            "description": "Created and applied notes, tags, note_tags migration to Production",
-            "files": [
-                "supabase/migrations/20260130_create_notes_tables.sql"
-            ]
-        },
-        {
-            "timestamp": "2026-01-30T11:07:00+07:00",
-            "type": "planning",
-            "description": "Created 7-phase plan for Tủ Lạnh module with specs and phase files",
-            "files": [
-                "docs/BRIEF_tulalanh.md",
-                "docs/specs/tulalanh_spec.md",
-                "plans/260130-1107-tulalanh/plan.md"
+                "docs/reports/audit_2026-02-05.md"
             ]
         }
     ],
     "errors_encountered": [
         {
-            "error": "Infinite rendering loop on Notes page",
-            "solution": "Removed 'loading' and 'fetchNotes' from useEffect dependency array. Changed to search-only mode.",
-            "resolved": true,
-            "file": "src/app/notes/page.tsx"
+            "error": "getXpReason accessed before declaration",
+            "solution": "Move function declaration above useEffect that uses it",
+            "resolved": true
+        },
+        {
+            "error": "npm ERESOLVE - react-day-picker conflict with date-fns v4",
+            "solution": "Use --legacy-peer-deps flag for npm update",
+            "resolved": true
         }
     ],
     "decisions_made": [
         {
-            "decision": "Search-only mode for Notes page",
-            "reason": "User requested not to auto-load all notes - only display search results"
+            "decision": "Giữ setState in effect warnings",
+            "reason": "Là false positives cho animation/timer logic - không ảnh hưởng performance"
         },
         {
-            "decision": "Integrated URL metadata fetch into Server Actions",
-            "reason": "Avoid need for separate Supabase Edge Function deployment"
+            "decision": "Không update TailwindCSS lên v4",
+            "reason": "Breaking changes lớn - cần migration riêng"
         },
         {
-            "decision": "Hierarchical tags as full paths",
-            "reason": "Simpler querying with 'tag1/subtag' format, denormalized 'level' for quick depth"
-        },
-        {
-            "decision": "Use Pills for Feed Filtering",
-            "reason": "Cleaner UI, easy to switch topics"
-        },
-        {
-            "decision": "Deep Glass Theme",
-            "reason": "Modern aesthetic requested by user"
+            "decision": "Tách AdminDashboard thành component riêng",
+            "reason": "Giảm file size class page từ 494 → 398 dòng, dễ maintain hơn"
         }
-    ]
+    ],
+    "audit_summary": {
+        "date": "2026-02-05",
+        "score": "9/10",
+        "critical_issues": 0,
+        "warnings": 4,
+        "suggestions": 5,
+        "npm_vulnerabilities": 0,
+        "supabase_advisor": "No issues found",
+        "rls_status": "Enabled on all important tables"
+    }
 }

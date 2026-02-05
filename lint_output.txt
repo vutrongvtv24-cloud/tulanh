@@ -1,0 +1,253 @@
+
+D:\AntiGravity\tulanh\src\app\class\[slug]\page.tsx
+    9:10  warning  'Badge' is defined but never used  @typescript-eslint/no-unused-vars
+  168:18  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\AntiGravity\tulanh\src\app\community\[slug]\page.tsx
+  3:10  warning  'SidebarLeft' is defined but never used   @typescript-eslint/no-unused-vars
+  4:10  warning  'SidebarRight' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\AntiGravity\tulanh\src\app\messages\page.tsx
+   9:16  warning  'UserPlus' is defined but never used                                                                                                               @typescript-eslint/no-unused-vars
+  46:8   warning  React Hook useEffect has missing dependencies: 'activeConversationId' and 'startConversation'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\AntiGravity\tulanh\src\app\profile\[id]\page.tsx
+  10:10  warning  'Trophy' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+  58:16  warning  'language' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  82:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\AntiGravity\tulanh\src\app\profile\[id]\page.tsx:82:13
+  80 |     useEffect(() => {
+  81 |         if (params?.id) {
+> 82 |             loadProfile(params.id as string);
+     |             ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  83 |         }
+  84 |     }, [params?.id, loadProfile]);
+  85 |  react-hooks/set-state-in-effect
+
+D:\AntiGravity\tulanh\src\app\todos\page.tsx
+   7:10  warning  'Checkbox' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-unused-vars
+  33:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\AntiGravity\tulanh\src\app\todos\page.tsx:33:13
+  31 |     useEffect(() => {
+  32 |         if (!user) {
+> 33 |             setLoading(false);
+     |             ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  34 |             return;
+  35 |         }
+  36 |  react-hooks/set-state-in-effect
+
+D:\AntiGravity\tulanh\src\components\feed\CreatePost.tsx
+    7:40  warning  'Globe' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+    7:47  warning  'Video' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   40:16  warning  'language' is assigned a value but never used                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+  207:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\AntiGravity\tulanh\src\components\feed\PostCard.tsx
+   62:8  warning  React Hook useEffect has a missing dependency: 'fetchApprovalStats'. Either include it or remove the dependency array                     react-hooks/exhaustive-deps
+  190:8  warning  React Hook useEffect has missing dependencies: 'comments.length' and 'fetchComments'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\AntiGravity\tulanh\src\components\feed\post-card\PostContent.tsx
+  90:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\AntiGravity\tulanh\src\components\gamification\RankBadge.tsx
+  5:31  warning  'RankConfig' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\AntiGravity\tulanh\src\components\gamification\XpToast.tsx
+    4:31  warning  'TrendingUp' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+   23:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\AntiGravity\tulanh\src\components\gamification\XpToast.tsx:23:13
+  21 |     useEffect(() => {
+  22 |         if (xpGain) {
+> 23 |             setVisible(true);
+     |             ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  24 |             setAnimating(true);
+  25 |
+  26 |             // Hide after animation                                                 react-hooks/set-state-in-effect
+  101:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\AntiGravity\tulanh\src\components\gamification\XpToast.tsx:101:13
+   99 |     useEffect(() => {
+  100 |         if (!current && queue.length > 0) {
+> 101 |             setCurrent(queue[0]);
+      |             ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  102 |             setQueue(prev => prev.slice(1));
+  103 |         }
+  104 |     }, [current, queue]);  react-hooks/set-state-in-effect
+
+D:\AntiGravity\tulanh\src\components\journal\PersonalJournal.tsx
+    4:29  warning  'CardHeader' is defined but never used                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+    4:41  warning  'CardTitle' is defined but never used                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+  160:18  warning  'err' is defined but never used                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+  318:37  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+D:\AntiGravity\tulanh\src\components\layout\Header.tsx
+    4:45  warning  'Settings' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+   28:19  warning  'signInWithGoogle' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+  140:21  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\AntiGravity\tulanh\src\components\layout\Header.tsx:140:21
+  138 |     // Hide results when clicking outside (simple hack, improved with click-away listener later)
+  139 |     useEffect(() => {
+> 140 |         if (!query) setOpen(false);
+      |                     ^^^^^^^ Avoid calling setState() directly within an effect
+  141 |         else setOpen(true);
+  142 |     }, [query]);
+  143 |  react-hooks/set-state-in-effect
+
+D:\AntiGravity\tulanh\src\components\layout\SidebarLeft.tsx
+   4:10  warning  'Lock' is defined but never used            @typescript-eslint/no-unused-vars
+   4:16  warning  'Home' is defined but never used            @typescript-eslint/no-unused-vars
+   4:22  warning  'Hash' is defined but never used            @typescript-eslint/no-unused-vars
+   5:10  warning  'RPG_CLASSES' is defined but never used     @typescript-eslint/no-unused-vars
+   5:23  warning  'SPACES' is defined but never used          @typescript-eslint/no-unused-vars
+  12:13  warning  'level' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\AntiGravity\tulanh\src\components\layout\SidebarRight.tsx
+   6:10  warning  'Avatar' is defined but never used              @typescript-eslint/no-unused-vars
+   6:18  warning  'AvatarFallback' is defined but never used      @typescript-eslint/no-unused-vars
+   6:34  warning  'AvatarImage' is defined but never used         @typescript-eslint/no-unused-vars
+  14:21  warning  'RankBadgeInline' is defined but never used     @typescript-eslint/no-unused-vars
+  15:26  warning  'GAMIFICATION_RULES' is defined but never used  @typescript-eslint/no-unused-vars
+  19:24  warning  'badges' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  20:16  warning  'language' is assigned a value but never used   @typescript-eslint/no-unused-vars
+
+D:\AntiGravity\tulanh\src\components\layout\TodosSidebar.tsx
+    7:10  warning  'Popover' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+    7:19  warning  'PopoverContent' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+    7:35  warning  'PopoverTrigger' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   93:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\AntiGravity\tulanh\src\components\layout\TodosSidebar.tsx:93:13
+  91 |             // Timer finished
+  92 |             const nextMode = mode === 'work' ? 'rest' : 'work';
+> 93 |             setMode(nextMode);
+     |             ^^^^^^^ Avoid calling setState() directly within an effect
+  94 |             setTimeLeft(nextMode === 'work' ? WORK_TIME : REST_TIME);
+  95 |
+  96 |             // Play notification sound or toast  react-hooks/set-state-in-effect
+  110:8   warning  React Hook useEffect has missing dependencies: 'REST_TIME', 'WORK_TIME', 't.todo.pomodoro.finishedRest', and 't.todo.pomodoro.finishedWork'. Either include them or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   react-hooks/exhaustive-deps
+
+D:\AntiGravity\tulanh\src\components\notes\NoteEditor.tsx
+   28:15  warning  'NoteWithTags' is defined but never used                                                                           @typescript-eslint/no-unused-vars
+   94:8   warning  React Hook useCallback has a missing dependency: 'handleSave'. Either include it or remove the dependency array    react-hooks/exhaustive-deps
+  118:8   warning  React Hook useEffect has a missing dependency: 'handleFetchUrl'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\AntiGravity\tulanh\src\components\notes\TagTree.tsx
+  7:10  warning  'Button' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\AntiGravity\tulanh\src\components\profile\ChangeAvatarDialog.tsx
+  61:18  warning  'error' is defined but never used                @typescript-eslint/no-unused-vars
+  78:27  warning  'uploadData' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\AntiGravity\tulanh\src\components\ui\calendar.tsx
+  57:33  warning  'props' is defined but never used  @typescript-eslint/no-unused-vars
+  58:34  warning  'props' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\AntiGravity\tulanh\src\context\GamificationContext.tsx
+   72:8   warning  React Hook useEffect has a missing dependency: 'supabase'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            react-hooks/exhaustive-deps
+  100:42  error    Error: Cannot access variable before it is declared
+
+`getXpReason` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+D:\AntiGravity\tulanh\src\context\GamificationContext.tsx:100:42
+   98 |                 // Show XP toast if XP increased
+   99 |                 if (xpGained > 0) {
+> 100 |                     showXpGain(xpGained, getXpReason(xpGained));
+      |                                          ^^^^^^^^^^^ `getXpReason` accessed before it is declared
+  101 |                 }
+  102 |
+  103 |                 // Show level up celebration
+
+D:\AntiGravity\tulanh\src\context\GamificationContext.tsx:122:5
+  120 |
+  121 |     // Helper to determine reason based on XP amount (updated for V2)
+> 122 |     const getXpReason = (amount: number): string => {
+      |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 123 |         switch (amount) {
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 124 |             case XP_ACTIONS.CREATE_POST: return "─É─âng b├ái! ≡ƒô¥";
+      ΓÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 133 |         }
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^
+> 134 |     };
+      | ^^^^^^^ `getXpReason` is declared here
+  135 |
+  136 |     // Daily Check-in Function
+  137 |     const performDailyCheckin = useCallback(async () => {  react-hooks/immutability
+  193:8   warning  React Hook useEffect has a missing dependency: 'supabase'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            react-hooks/exhaustive-deps
+
+D:\AntiGravity\tulanh\src\hooks\useCalendarSync.ts
+  19:12  warning  'syncedEvents' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\AntiGravity\tulanh\src\hooks\useChat.ts
+   2:31  warning  'useRef' is defined but never used             @typescript-eslint/no-unused-vars
+  80:31  warning  'lastMsgs' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\AntiGravity\tulanh\src\hooks\useFollow.ts
+  44:8  warning  React Hook useEffect has a missing dependency: 'supabase'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  64:8  warning  React Hook useEffect has a missing dependency: 'supabase'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\AntiGravity\tulanh\src\hooks\useLeaderboard.ts
+  48:8  warning  React Hook useEffect has a missing dependency: 'supabase'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\AntiGravity\tulanh\src\hooks\useNotifications.ts
+  28:27  warning  'error' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  61:18  warning  'payload' is defined but never used         @typescript-eslint/no-unused-vars
+
+D:\AntiGravity\tulanh\src\hooks\usePosts.ts
+    8:6   warning  'Post' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   66:27  warning  'error' is assigned a value but never used                                                                          @typescript-eslint/no-unused-vars
+  230:8   warning  React Hook useCallback has a missing dependency: 'communitySlug'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  284:21  warning  'data' is assigned a value but never used                                                                           @typescript-eslint/no-unused-vars
+  293:24  warning  'data' is assigned a value but never used                                                                           @typescript-eslint/no-unused-vars
+
+D:\AntiGravity\tulanh\src\hooks\useSearch.ts
+  13:11  warning  'ProfileSearchRow' is defined but never used                                                                 @typescript-eslint/no-unused-vars
+  19:11  warning  'PostSearchRow' is defined but never used                                                                    @typescript-eslint/no-unused-vars
+  81:8   warning  React Hook useEffect has a missing dependency: 'supabase'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\AntiGravity\tulanh\src\lib\supabase\middleware.ts
+  20:58  warning  'options' is defined but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 75 problems (7 errors, 68 warnings)
+

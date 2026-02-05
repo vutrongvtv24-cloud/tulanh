@@ -148,7 +148,7 @@ export function usePosts(communitySlug?: string, topic?: string) {
             }
 
             // 2. Check which posts user has liked (if logged in)
-            let likedPostIds = new Set<string>();
+            const likedPostIds = new Set<string>();
             if (user) {
                 const postIds = postsData.map((p: { id: string }) => p.id);
                 if (postIds.length > 0) {

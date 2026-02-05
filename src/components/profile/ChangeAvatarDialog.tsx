@@ -109,8 +109,9 @@ export function ChangeAvatarDialog({ userId, currentAvatar, currentName, canChan
             setOpen(false);
             setPreview(null);
             setSelectedFile(null);
-        } catch (error: any) {
-            toast.error(error.message || "Failed to update avatar");
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : 'Failed to update avatar';
+            toast.error(message);
         } finally {
             setLoading(false);
         }

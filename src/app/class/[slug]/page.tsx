@@ -1,21 +1,18 @@
 "use client";
 
 import { useEffect, useState, use } from "react";
-import { useParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { useSupabaseAuth } from "@/hooks/useSupabaseAuth";
 import { useGamification } from "@/context/GamificationContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Users, Lock, ShieldCheck, Clock, UserPlus, CheckCircle, XCircle } from "lucide-react";
-import { Feed } from "@/components/feed/Feed";
+import { Users, Lock, ShieldCheck, Clock, UserPlus, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CreatePost } from "@/components/feed/CreatePost";
 import { usePosts } from "@/hooks/usePosts";
 import { PostCard } from "@/components/feed/PostCard";
+import { AdminDashboard, type PendingMember } from "@/components/class";
 
 interface Community {
     id: string;
@@ -42,7 +39,7 @@ export default function ClassPage({ params }: { params: Promise<{ slug: string }
     const [joinLoading, setJoinLoading] = useState(false);
 
     // Admin state
-    const [pendingMembers, setPendingMembers] = useState<any[]>([]);
+    const [pendingMembers, setPendingMembers] = useState<PendingMember[]>([]);
 
     const supabase = createClient();
     const { user } = useSupabaseAuth();
@@ -362,95 +359,15 @@ export default function ClassPage({ params }: { params: Promise<{ slug: string }
 
                 {isAdmin && (
                     <TabsContent value="admin" className="space-y-6 mt-6">
-                        <div className="grid md:grid-cols-2 gap-6">
-                            {/* Member Requests */}
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle className="text-lg flex items-center justify-between">
-                                        Member Requests
-                                        <Badge variant="secondary">{pendingMembers.length}</Badge>
-                                    </CardTitle>
-                                </CardHeader>
-                                <CardContent className="space-y-4">
-                                    {pendingMembers.length === 0 ? (
-                                        <p className="text-sm text-muted-foreground">No pending requests.</p>
-                                    ) : (
-                                        pendingMembers.map((m: any) => (
-                                            <div key={m.id} className="flex items-center justify-between p-3 bg-secondary/20 rounded-lg">
-                                                <div className="flex items-center gap-3">
-                                                    <Avatar className="h-8 w-8">
-                                                        <AvatarImage src={m.profiles?.avatar_url} />
-                                                        <AvatarFallback>{m.profiles?.full_name[0]}</AvatarFallback>
-                                                    </Avatar>
-                                                    <div>
-                                                        <div className="font-medium text-sm">{m.profiles?.full_name}</div>
-                                                        <div className="text-xs text-muted-foreground">Level {m.profiles?.level}</div>
-                                                    </div>
-                                                </div>
-                                                <div className="flex gap-1">
-                                                    <Button
-                                                        size="sm"
-                                                        className="h-7 text-xs bg-green-600 hover:bg-green-700"
-                                                        onClick={() => handleApproveMember(m.id)}
-                                                    >
-                                                        <CheckCircle className="h-3 w-3 mr-1" /> Approve
-                                                    </Button>
-                                                    <Button
-                                                        size="sm"
-                                                        variant="outline"
-                                                        className="h-7 text-xs"
-                                                        onClick={() => handleRejectMember(m.id)}
-                                                    >
-                                                        <XCircle className="h-3 w-3 mr-1" /> Reject
-                                                    </Button>
-                                                    <Button
-                                                        size="sm"
-                                                        variant="destructive"
-                                                        className="h-7 text-xs"
-                                                        onClick={() => handleBlockMember(m.id, m.user_id)}
-                                                    >
-                                                        Block
-                                                    </Button>
-                                                </div>
-                                            </div>
-                                        ))
-                                    )}
-                                </CardContent>
-                            </Card>
-
-                            {/* Pending Posts */}
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle className="text-lg flex items-center justify-between">
-                                        Pending Posts
-                                        <Badge variant="secondary">{pendingPosts.length}</Badge>
-                                    </CardTitle>
-                                </CardHeader>
-                                <CardContent className="space-y-4">
-                                    {pendingPosts.length === 0 ? (
-                                        <p className="text-sm text-muted-foreground">No pending posts.</p>
-                                    ) : (
-                                        pendingPosts.map(post => (
-                                            <div key={post.id} className="p-3 bg-secondary/20 rounded-lg space-y-3">
-                                                <div className="flex items-center gap-2 text-sm font-medium">
-                                                    <Avatar className="h-6 w-6">
-                                                        <AvatarImage src={post.user.avatar} />
-                                                        <AvatarFallback>U</AvatarFallback>
-                                                    </Avatar>
-                                                    {post.user.name}
-                                                </div>
-                                                <p className="text-sm text-muted-foreground line-clamp-2">{post.content}</p>
-                                                {post.image_url && <div className="text-xs text-blue-500">[Contains Image]</div>}
-                                                <div className="flex gap-2">
-                                                    <Button size="sm" className="h-7 text-xs w-full bg-green-600 hover:bg-green-700" onClick={() => handleApprovePost(post.id)}>Approve</Button>
-                                                    <Button size="sm" variant="destructive" className="h-7 text-xs w-full" onClick={() => handleRejectPost(post.id)}>Reject</Button>
-                                                </div>
-                                            </div>
-                                        ))
-                                    )}
-                                </CardContent>
-                            </Card>
-                        </div>
+                        <AdminDashboard
+                            pendingMembers={pendingMembers}
+                            pendingPosts={pendingPosts}
+                            onApproveMember={handleApproveMember}
+                            onRejectMember={handleRejectMember}
+                            onBlockMember={handleBlockMember}
+                            onApprovePost={handleApprovePost}
+                            onRejectPost={handleRejectPost}
+                        />
                     </TabsContent>
                 )}
 

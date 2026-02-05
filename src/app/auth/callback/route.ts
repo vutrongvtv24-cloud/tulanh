@@ -13,7 +13,6 @@ export async function GET(request: Request) {
         const { error } = await supabase.auth.exchangeCodeForSession(code)
 
         if (!error) {
-            const forwardedHost = request.headers.get('x-forwarded-host')
             if (process.env.NODE_ENV === 'production') {
                 return NextResponse.redirect(`https://tulanh.online${next}`)
             }

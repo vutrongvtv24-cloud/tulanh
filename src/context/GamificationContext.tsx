@@ -45,6 +45,22 @@ export function GamificationProvider({ children }: { children: React.ReactNode }
     const xpProgress = level === 5 ? 100 : Math.min((xpInCurrentRank / xpNeededForRank) * 100, 100);
     const imagePostLimit = getImageLimit(level);
 
+    // Helper to determine reason based on XP amount (updated for V2)
+    // Declared here to be available in realtime callback
+    const getXpReason = (amount: number): string => {
+        switch (amount) {
+            case XP_ACTIONS.CREATE_POST: return "Đăng bài! 📝";
+            case XP_ACTIONS.DAILY_CHECKIN: return "Điểm danh! 📅";
+            case XP_ACTIONS.RECEIVE_COMMENT: return "Nhận Comment! 💬";
+            case XP_ACTIONS.RECEIVE_SHARE: return "Nhận Share! 🔁";
+            case XP_ACTIONS.RECEIVE_LIKE:
+            case XP_ACTIONS.GIVE_COMMENT: return "Tương tác! ⚡";
+            default:
+                if (amount >= 50) return "Bonus Level Up! 🎁";
+                return "Hoạt động! ✨";
+        }
+    };
+
     // Initial Load
     useEffect(() => {
         const init = async () => {
@@ -116,22 +132,7 @@ export function GamificationProvider({ children }: { children: React.ReactNode }
         return () => {
             supabase.removeChannel(channel);
         };
-    }, [userId, supabase, showXpGain]);
-
-    // Helper to determine reason based on XP amount (updated for V2)
-    const getXpReason = (amount: number): string => {
-        switch (amount) {
-            case XP_ACTIONS.CREATE_POST: return "Đăng bài! 📝";
-            case XP_ACTIONS.DAILY_CHECKIN: return "Điểm danh! 📅";
-            case XP_ACTIONS.RECEIVE_COMMENT: return "Nhận Comment! 💬";
-            case XP_ACTIONS.RECEIVE_SHARE: return "Nhận Share! 🔁";
-            case XP_ACTIONS.RECEIVE_LIKE:
-            case XP_ACTIONS.GIVE_COMMENT: return "Tương tác! ⚡";
-            default:
-                if (amount >= 50) return "Bonus Level Up! 🎁";
-                return "Hoạt động! ✨";
-        }
-    };
+    }, [userId, supabase, showXpGain, getXpReason]);
 
     // Daily Check-in Function
     const performDailyCheckin = useCallback(async () => {

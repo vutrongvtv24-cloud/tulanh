@@ -38,9 +38,10 @@ export function SetLevelDialog({ userId, currentLevel, userName, onLevelChanged 
             toast.success(`Đã cập nhật ${userName} lên Level ${level}`);
             onLevelChanged(level, rankConfig.minXp);
             setIsOpen(false);
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error(error);
-            toast.error("Lỗi cập nhật level: " + error.message);
+            const message = error instanceof Error ? error.message : 'Unknown error';
+            toast.error("Lỗi cập nhật level: " + message);
         } finally {
             setIsLoading(false);
         }

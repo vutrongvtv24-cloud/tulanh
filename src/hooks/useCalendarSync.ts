@@ -1,18 +1,26 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSupabaseAuth } from './useSupabaseAuth';
-import { createClient } from '@/lib/supabase/client';
 import { toast } from 'sonner';
+
+// Google Calendar Event interface
+interface GoogleCalendarEvent {
+    id: string;
+    summary: string;
+    htmlLink?: string;
+    start: { dateTime: string; timeZone: string };
+    end: { dateTime: string; timeZone: string };
+}
 
 export const useCalendarSync = () => {
     const { session } = useSupabaseAuth();
     const [isSyncing, setIsSyncing] = useState(false);
-    const [syncedEvents, setSyncedEvents] = useState<any[]>([]);
+    const [syncedEvents, setSyncedEvents] = useState<GoogleCalendarEvent[]>([]);
 
     const syncToCalendar = async (todo: { content: string, date?: Date }) => {
         if (!session?.provider_token) {
-            console.warn("Missing provider_token. Session:", session);
+            // Toast already shows error to user
             toast.error('Không tìm thấy quyền truy cập Google Calendar. Vui lòng đăng xuất và đăng nhập lại.');
             return;
         }
@@ -50,9 +58,10 @@ export const useCalendarSync = () => {
             toast.success('Đã đồng bộ công việc lên Google Calendar!');
             setSyncedEvents(prev => [...prev, data]);
             return data;
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error('Calendar sync error:', error);
-            toast.error(`Lỗi đồng bộ: ${error.message}`);
+            const message = error instanceof Error ? error.message : 'Unknown error';
+            toast.error(`Lỗi đồng bộ: ${message}`);
         } finally {
             setIsSyncing(false);
         }

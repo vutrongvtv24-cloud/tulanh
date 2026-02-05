@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams } from "next/navigation";
 import { fetchProfile, canChangeName, canChangeAvatar } from "@/lib/profile";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -70,11 +70,18 @@ export default function ProfilePage() {
     // Given the constraints, let's keep it simple: Show posts without interactive Like for now, 
     // OR fetch 'liked' status.
 
+    const loadProfile = useCallback(async (id: string) => {
+        setLoading(true);
+        const data = await fetchProfile(id) as ProfileData | null;
+        setProfile(data);
+        setLoading(false);
+    }, []);
+
     useEffect(() => {
         if (params?.id) {
             loadProfile(params.id as string);
         }
-    }, [params?.id]);
+    }, [params?.id, loadProfile]);
 
     // Re-check permissions when authUser becomes available
     useEffect(() => {
@@ -90,13 +97,6 @@ export default function ProfilePage() {
         };
         checkPermissions();
     }, [authUser?.id, params?.id]);
-
-    const loadProfile = async (id: string) => {
-        setLoading(true);
-        const data = await fetchProfile(id) as ProfileData | null;
-        setProfile(data);
-        setLoading(false);
-    };
 
     if (loading) return <div className="p-10 text-center">{t.common.loading}</div>;
     if (!profile) return <div className="p-10 text-center">{t.errors.userNotFound}</div>;

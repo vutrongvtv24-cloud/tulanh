@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2026-02-05]
+### Added
+- **🧹 Component Refactoring:** Tách `class/[slug]/page.tsx` thành modular components.
+  - `AdminDashboard.tsx` - Admin panel với Member Requests và Pending Posts
+  - `ClassHeader.tsx` - Header với banner và membership button
+  - `ContentLocked.tsx` - UI khi user chưa join class
+  - `index.ts` - Barrel export file
+- **🔒 Security Audit:** Full audit report (`docs/reports/audit_2026-02-05.md`)
+  - Score: 9/10 - No critical issues
+  - npm vulnerabilities: 0
+  - Supabase Advisor: "No issues found"
+  - RLS enabled on all important tables
+
+### Fixed
+- **GamificationContext:** Fixed "variable accessed before declaration" error for `getXpReason`
+- **Type Safety:** Replaced all `any` types với proper interfaces (`PendingMember`, `GoogleCalendarEvent`)
+- **Console Cleanup:** Removed sensitive session logging từ `useCalendarSync.ts`
+- **Unused Imports:** Removed unused imports across multiple files
+
+### Updated
+- **Dependencies:**
+  - `@supabase/supabase-js`: 2.90.1 → 2.94.1
+  - `eslint-config-next`: Updated to match Next.js 16.1.6
+- **ESLint:** Reduced từ 77 → 74 problems (7 → 6 errors, 68 warnings)
+
+### Refactored
+- **Class Page:** Giảm từ 494 → 398 dòng qua component extraction
+- **Error Handling:** Thay `any` bằng `unknown` với proper `instanceof Error` checks
+
 ## [2026-01-30]
 ### Added
 - **🆕 Tủ Lạnh Module (MarkNote):** Complete note-taking and URL bookmarking system.

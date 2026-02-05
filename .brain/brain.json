@@ -1,49 +1,75 @@
 {
     "meta": {
         "schema_version": "1.1.0",
-        "awf_version": "3.3.0"
+        "awf_version": "4.0.2",
+        "created_at": "2026-01-30T00:00:00Z",
+        "updated_at": "2026-02-05T11:23:00Z"
     },
     "project": {
-        "name": "Builder Ecosystem Clone",
-        "type": "Community & Education Platform",
-        "status": "Deployed (Production)"
+        "name": "Tủ Lạnh (Tulanh Online)",
+        "type": "Social Learning Platform",
+        "status": "production",
+        "description": "Mạng xã hội học tập gamified với Supabase backend",
+        "repository": "https://github.com/vutrongvtv24/tulanh"
     },
     "tech_stack": {
         "frontend": {
-            "framework": "Next.js 16.1.3 (App Router)",
+            "framework": "Next.js 16.1.6 (App Router)",
             "language": "TypeScript",
-            "ui_library": "Shadcn/UI",
-            "styling": "TailwindCSS"
+            "ui_library": "Shadcn/UI + Radix UI",
+            "styling": "TailwindCSS 3.4.19",
+            "icons": "lucide-react 0.562.0"
         },
         "backend": {
             "framework": "Next.js Server Actions",
             "database": "Supabase (PostgreSQL)",
-            "auth": "Supabase Auth"
+            "auth": "Supabase Auth",
+            "project_id": "uoqyotwurkyjdrawqbpe"
         },
         "database": {
             "type": "PostgreSQL (via Supabase)",
-            "orm": "None (Raw SQL / Supabase Client)"
+            "orm": "None (Raw SQL / Supabase Client)",
+            "region": "Southeast Asia (Singapore)"
         },
         "deployment": {
             "server": "VPS (Ubuntu 22.04)",
             "panel": "aaPanel",
             "web_server": "Nginx (Reverse Proxy)",
             "process_manager": "PM2",
-            "node_version": "20.x"
+            "node_version": "20.x",
+            "domain": "tulanh.online"
+        },
+        "key_packages": {
+            "@supabase/supabase-js": "2.94.1",
+            "react": "19.2.3",
+            "next": "16.1.6",
+            "tailwindcss": "3.4.19"
         }
     },
     "database_schema": {
-        "summary": "Project uses a modular schema with core tables + feature-specific modules.",
-        "modules": [
-            "COMPLETE_SETUP.sql (Core)",
-            "badges.sql (Gamification)",
-            "chat.sql (Messaging)",
-            "follows.sql (Social Graph)",
-            "likes_comments.sql (Engagement)",
-            "notifications.sql (System)",
-            "xp_system.sql (Gamification Logic)",
-            "migrations/20260127_add_topic_to_posts.sql (Topic Filter)",
-            "migrations/20260130_create_notes_tables.sql (Tủ Lạnh Module)"
+        "summary": "Social learning platform với 21 tables. Users -> Posts, Comments, Communities, Notes, Todos, Badges.",
+        "tables": [
+            "profiles",
+            "posts",
+            "comments",
+            "likes",
+            "follows",
+            "communities",
+            "community_members",
+            "notifications",
+            "conversations",
+            "direct_messages",
+            "badges",
+            "user_badges",
+            "todos",
+            "notes",
+            "tags",
+            "note_tags",
+            "journal_entries",
+            "daily_checkins",
+            "shares",
+            "post_approvals",
+            "conversation_participants"
         ],
         "tulanh_tables": [
             {
@@ -86,33 +112,33 @@
                 "description": "Junction table many-to-many giữa notes và tags"
             }
         ],
-        "relationships_explained": "Users have Profiles. Users can Follow each other. Posts can be Liked/Commented. Users earn XP and Badges. Posts have 'topic' column (Youtube/MMO/Share). NOTES: Users have many Notes. Notes have many Tags (via note_tags). Tags can be hierarchical (parent_id)."
+        "relationships_explained": "Users have Profiles. Users can Follow each other. Posts can be Liked/Commented. Users earn XP and Badges. Posts have 'topic' column. Notes have many Tags (via note_tags). Tags can be hierarchical (parent_id)."
     },
     "features": [
         {
             "name": "Auth",
             "status": "Implemented",
-            "description": "User authentication via Supabase"
+            "description": "Supabase Auth + Google OAuth"
         },
         {
             "name": "Gamification",
-            "status": "In Progress",
-            "description": "XP System, Ranks (1-5), Badges, Leaderboards"
+            "status": "Implemented",
+            "description": "XP System, Ranks (1-5), Badges, Daily Check-in, Leaderboards"
         },
         {
             "name": "Community",
-            "status": "Active",
-            "description": "Newsfeed, Posts, Likes, Comments, Topic Filtering (Youtube/MMO/Share)"
-        },
-        {
-            "name": "UI/UX",
             "status": "Implemented",
-            "description": "Deep Glass Theme (Dark Mode Optimized), Rank Badges, Pill Filters"
+            "description": "Newsfeed, Posts, Likes, Comments, Topic Filtering"
         },
         {
-            "name": "Classroom",
-            "status": "Planned",
-            "description": "Course catalog and lesson viewer"
+            "name": "Classes",
+            "status": "Implemented",
+            "description": "Private communities với admin approval, RLS policies"
+        },
+        {
+            "name": "Tủ Lạnh (Notes)",
+            "status": "Implemented",
+            "description": "Note-taking với Markdown, URL bookmarking, Hierarchical tags"
         },
         {
             "name": "Productivity Tools",
@@ -120,26 +146,65 @@
             "description": "Todos, Journal, Pomodoro Timer"
         },
         {
-            "name": "Tủ Lạnh (MarkNote)",
+            "name": "Direct Messages",
             "status": "Implemented",
-            "description": "Note-taking with Markdown, URL bookmarking with auto metadata, Hierarchical tags, Search. Route: /notes"
+            "description": "1-1 messaging giữa users"
         }
     ],
-    "knowledge_items": {
-        "gotchas": [
-            "useEffect with loading state in dependencies can cause infinite loops - remove loading from deps array",
-            "Supabase Edge Functions require Deno types which conflict with TypeScript - exclude from tsconfig"
+    "security": {
+        "rls_enabled": true,
+        "auth_provider": "Supabase Auth",
+        "oauth_providers": [
+            "Google"
         ],
+        "last_audit": "2026-02-05",
+        "audit_result": "9/10 - No critical issues",
+        "npm_vulnerabilities": 0
+    },
+    "knowledge_items": {
         "patterns": [
             "Supabase RLS for security",
             "Next.js Server Components for data fetching",
-            "Internationalization (i18n): Full En/Vi support via LanguageContext",
-            "PostCard Refactor: Split into sub-components (Header, Content, Actions, Comments, Approval)",
-            "Server Actions for CRUD with error handling: return { success, data, error }",
-            "URL metadata fetching: Parse HTML for og:title, og:description, fallback to <title>",
-            "Hierarchical tags stored as paths (parent/child) with denormalized 'level' column",
-            "Debounced search with useEffect + setTimeout pattern",
-            "TagTree component with recursive rendering for hierarchical display"
+            "Server Actions for CRUD: return { success, data, error }",
+            "useCallback cho functions trong useEffect dependencies",
+            "Component splitting: AdminDashboard, ClassHeader, ContentLocked",
+            "URL metadata fetching: Parse HTML for og:title, og:description",
+            "Hierarchical tags stored with denormalized 'level' column",
+            "Debounced search with useEffect + setTimeout pattern"
+        ],
+        "gotchas": [
+            "Không log session object trong console.warn (sensitive data)",
+            "react-day-picker conflict với date-fns v4 - dùng --legacy-peer-deps",
+            "setState in effect warnings là false positives cho animation/timer logic",
+            "getXpReason phải khai báo trước khi dùng trong realtime callback (hoisting)",
+            "Supabase Edge Functions require Deno types - exclude from tsconfig",
+            "useEffect với loading state trong deps có thể gây infinite loops"
+        ],
+        "conventions": [
+            "Components nhóm theo feature: components/class/, components/feed/",
+            "Hooks trong hooks/ folder",
+            "Server actions trong app/actions/",
+            "Types trong types/ và inline interfaces",
+            "i18n: Full En/Vi support via LanguageContext"
+        ]
+    },
+    "component_structure": {
+        "new_components": [
+            {
+                "path": "src/components/class/AdminDashboard.tsx",
+                "purpose": "Admin panel với Member Requests và Pending Posts cards",
+                "created": "2026-02-05"
+            },
+            {
+                "path": "src/components/class/ClassHeader.tsx",
+                "purpose": "Header component cho Class page với banner và membership button",
+                "created": "2026-02-05"
+            },
+            {
+                "path": "src/components/class/ContentLocked.tsx",
+                "purpose": "UI khi user chưa join class",
+                "created": "2026-02-05"
+            }
         ]
     }
 }
