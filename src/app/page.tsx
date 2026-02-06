@@ -38,11 +38,8 @@ export default function Home() {
     );
   }
 
-  if (!user) {
-    return <LandingPage />;
-  }
-
   // Community Feed - shows all public posts from everyone
+  // Modified: Allow public access (Feed component handles auth check for create post)
   return <Feed />;
 }
 
