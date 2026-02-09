@@ -15,7 +15,10 @@ interface PostActionsProps {
 export function PostActions({ likes, commentsCount, isLiked, onToggleLike, onToggleComments, postId }: PostActionsProps) {
     const { t } = useLanguage();
 
-    const handleShare = async () => {
+    const handleShare = async (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+
         if (!postId) {
             toast.error("Không tìm thấy ID bài viết");
             return;
@@ -25,18 +28,19 @@ export function PostActions({ likes, commentsCount, isLiked, onToggleLike, onTog
         const shareUrl = `${window.location.origin}/post/${postId}`;
         const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
 
-        try {
-            // Try explicit clipboard write first as it is often more useful
-            await navigator.clipboard.writeText(shareUrl);
-            toast.success("Đã copy link bài viết!");
+        console.log("Sharing URL:", shareUrl); // Debug log
 
-            // Then open Facebook share
-            window.open(facebookShareUrl, '_blank', 'width=600,height=400');
+        try {
+            // Try explicit clipboard write first
+            await navigator.clipboard.writeText(shareUrl);
+            toast.success("Link đã copy vào clipboard!");
         } catch (err) {
-            console.error("Share error:", err);
-            // Fallback if clipboard fails
-            window.open(facebookShareUrl, '_blank', 'width=600,height=400');
+            console.error("Clipboard error:", err);
+            // Non-blocking error for clipboard, proceed to open share dialog
         }
+
+        // Open Facebook share
+        window.open(facebookShareUrl, '_blank', 'width=600,height=400');
     };
 
     return (
