@@ -1,68 +1,39 @@
 {
-  "updated_at": "2026-02-08T07:15:00Z",
+  "updated_at": "2026-02-09T23:55:00+07:00",
   "working_on": {
-    "feature": "Post-Deployment Config",
-    "task": "Update Auth Redirect URLs",
-    "status": "pending",
+    "feature": "Core Infra",
+    "task": "Nginx & Auth Fixes",
+    "status": "completed",
     "files": [
-      "Supabase Dashboard (External)",
-      "Google Cloud Console (External)"
+      "nginx_tulanh.conf",
+      "docs/deployment/vps_setup.md",
+      "docs/deployment/troubleshooting.md"
     ],
-    "blockers": [],
-    "notes": "Deployment successful. HTTPS active. Need to update 3rd party auth providers."
+    "notes": "Resolved 502 Bad Gateway and PKCE issues.",
+    "blockers": []
   },
   "pending_tasks": [
     {
-      "task": "Update Supabase Site URL to https://tulanh.online",
+      "task": "Develop Post/Feature API",
+      "description": "Create API endpoints for posts and comments.",
       "priority": "high",
-      "notes": "Critical for Auth"
-    },
-    {
-      "task": "Update Google OAuth Redirect URI",
-      "priority": "high",
-      "notes": "Critical for Google Login"
-    },
-    {
-      "task": "Monitor VPS stability",
-      "priority": "medium",
-      "notes": "Ensure Swap memory is sufficient for future builds"
+      "status": "pending"
     }
   ],
   "recent_changes": [
     {
-      "timestamp": "2026-02-08T07:10:00Z",
-      "type": "infrastructure",
-      "description": "Automated VPS configuration with configure_vps.ps1",
-      "files": ["configure_vps.ps1", "nginx_base.conf"]
+      "files": [
+        "src/hooks/useSupabaseAuth.ts"
+      ],
+      "description": "Fix hardcoded redirect URL in auth hook.",
+      "timestamp": "2026-02-09T23:30:00+07:00"
     },
     {
-      "timestamp": "2026-02-08T07:08:00Z",
-      "type": "deployment",
-      "description": "Successfully enabled HTTPS via Let's Encrypt",
-      "files": []
+      "files": [
+        "/etc/nginx/sites-available/tulanh.online"
+      ],
+      "description": "Fix Nginx buffer size for Supabase headers.",
+      "timestamp": "2026-02-09T23:45:00+07:00"
     }
-  ],
-  "errors_encountered": [],
-  "decisions_made": [
-    {
-      "decision": "Bypass aaPanel UI for Nginx Config",
-      "reason": "Direct file manipulation via SSH script provides more reliable results and avoids UI quirks."
-    }
-  ],
-  "deployment_notes": {
-    "last_deploy": "2026-02-08T07:08:00Z",
-    "deploy_method": "Automated SSH Script (configure_vps.ps1)",
-    "vps_ip": "43.228.214.174",
-    "domain": "https://tulanh.online",
-    "pm2_app_name": "tulanh",
-    "notes": "SSL Enabled. Auto-renew via Certbot."
-  },
-  "audit_summary": {
-    "date": "2026-02-05",
-    "score": "9.5/10",
-    "critical_issues": 0,
-    "warnings": 0,
-    "suggestions": 5,
-    "npm_vulnerabilities": 0
-  }
+  ]
 }
