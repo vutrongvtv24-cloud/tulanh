@@ -15,19 +15,28 @@ interface PostActionsProps {
 export function PostActions({ likes, commentsCount, isLiked, onToggleLike, onToggleComments, postId }: PostActionsProps) {
     const { t } = useLanguage();
 
-    const handleShare = () => {
-        if (!postId) return;
-        
+    const handleShare = async () => {
+        if (!postId) {
+            toast.error("Không tìm thấy ID bài viết");
+            return;
+        }
+
         // Construct the share URL
         const shareUrl = `${window.location.origin}/post/${postId}`;
         const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
-        
-        // Open Facebook share dialog
-        window.open(facebookShareUrl, '_blank', 'width=600,height=400');
-        
-        // Optional: Copy to clipboard or show toast
-        // navigator.clipboard.writeText(shareUrl);
-        // toast.success("Link copied to clipboard!");
+
+        try {
+            // Try explicit clipboard write first as it is often more useful
+            await navigator.clipboard.writeText(shareUrl);
+            toast.success("Đã copy link bài viết!");
+
+            // Then open Facebook share
+            window.open(facebookShareUrl, '_blank', 'width=600,height=400');
+        } catch (err) {
+            console.error("Share error:", err);
+            // Fallback if clipboard fails
+            window.open(facebookShareUrl, '_blank', 'width=600,height=400');
+        }
     };
 
     return (
@@ -50,9 +59,9 @@ export function PostActions({ likes, commentsCount, isLiked, onToggleLike, onTog
                 <MessageSquare className="h-4 w-4" />
                 {commentsCount}
             </Button>
-            <Button 
-                variant="ghost" 
-                size="sm" 
+            <Button
+                variant="ghost"
+                size="sm"
                 className="flex-1 gap-2 text-muted-foreground bg-transparent hover:text-blue-500 hover:bg-blue-500/10 transition-colors"
                 onClick={handleShare}
             >
