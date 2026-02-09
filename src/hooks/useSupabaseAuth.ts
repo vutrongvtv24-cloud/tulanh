@@ -51,11 +51,13 @@ export function useSupabaseAuth() {
   }, [supabase]);
 
   const signInWithGoogle = async () => {
-    const baseUrl = "https://tulanh.online";
+    // Check if running in browser
+    const origin = (typeof window !== 'undefined' && window.location) ? window.location.origin : '';
+
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${baseUrl}/auth/callback`,
+        redirectTo: `${origin}/auth/callback`,
         scopes: "email profile openid",
       },
     });
